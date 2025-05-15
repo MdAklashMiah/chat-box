@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Not_found from './pages/Not_found';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Chatroom from './pages/Chatroom';
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup/>
+  },
+  {
+    path: "/chatroom",
+    element: <Chatroom/>
   }
 ]);
 
