@@ -13,11 +13,15 @@ import Chatroom from './pages/Chatroom';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
+    element: <Login/>,
   },
   {
     path: "*",
     element: <Not_found/>,
+  },
+  {
+    path: "/home",
+    element: <Home/>,
   },
   {
     path: "/login",

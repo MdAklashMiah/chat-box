@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import Login from "./Login";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
+import { useNavigate } from "react-router";
 
 const Signup = () => {
-  const[passVisibility, setPassVisibility] = useState(false)
+  const [passVisibility, setPassVisibility] = useState(false);
   const auth = getAuth();
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -50,21 +57,34 @@ const Signup = () => {
     ) {
       toast.error("invalid Email Address");
     } else if (userInfo.password !== userInfo.cpassword) {
-      toast.error("Passwords don't match! Please ensure both fields contain the same password");
+      toast.error(
+        "Passwords don't match! Please ensure both fields contain the same password"
+      );
     } else {
       createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
         .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          // ...
-          toast.success("Sign UP Successfully")
-          setUserInfo({
-            name: "",
-            email: "",
-            password: "",
-            cpassword: "",
-          })
-          console.log(user);
+          sendEmailVerification(auth.currentUser).then(() => {
+            updateProfile(auth.currentUser, {
+              displayName: userInfo.name,
+              photoURL: "https://example.com/jane-q-user/profile.jpg",
+            })
+              .then(() => {
+                const user = userCredential.user;
+                // ...
+                toast.success("Sign UP Successfully");
+                setUserInfo({
+                  name: "",
+                  email: "",
+                  password: "",
+                  cpassword: "",
+                });
+                console.log(user);
+                navigate('/')
+              })
+              .catch((error) => {
+                console.log(error)
+              });
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -80,9 +100,9 @@ const Signup = () => {
     }
   };
 
-  const handleShowPassword =()=>{
-    setPassVisibility(!passVisibility)
-  }
+  const handleShowPassword = () => {
+    setPassVisibility(!passVisibility);
+  };
 
   return (
     <div className="flex flex-col justify-center bg-[#002D74] sm:h-screen p-4">
@@ -126,16 +146,17 @@ const Signup = () => {
                 Password
               </label>
               <div className="relative">
-              <input
-                value={userInfo.password}
-                onChange={handlePassword}
-                name="password"
-                type={passVisibility ? "text" : "password"}
-                className="p-3 rounded-xl border w-full"
-                placeholder="Enter password"
-              />
+                <input
+                  value={userInfo.password}
+                  onChange={handlePassword}
+                  name="password"
+                  type={passVisibility ? "text" : "password"}
+                  className="p-3 rounded-xl border w-full"
+                  placeholder="Enter password"
+                />
 
-              <svg onClick={handleShowPassword}
+                <svg
+                  onClick={handleShowPassword}
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
                   height={16}
@@ -155,15 +176,16 @@ const Signup = () => {
               </label>
 
               <div className="relative">
-              <input
-                value={userInfo.cpassword}
-                onChange={handleConfirmPassword}
-                name="cpassword"
-                type={passVisibility ? "text" : "password"}
-                className="p-3 rounded-xl border w-full"
-                placeholder="Enter confirm password"
-              />
-              <svg onClick={handleShowPassword}
+                <input
+                  value={userInfo.cpassword}
+                  onChange={handleConfirmPassword}
+                  name="cpassword"
+                  type={passVisibility ? "text" : "password"}
+                  className="p-3 rounded-xl border w-full"
+                  placeholder="Enter confirm password"
+                />
+                <svg
+                  onClick={handleShowPassword}
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
                   height={16}

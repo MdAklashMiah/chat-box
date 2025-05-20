@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-  const[passVisibility, setPassVisibility] = useState(false)
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const [passVisibility, setPassVisibility] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -28,15 +32,34 @@ const Login = () => {
       !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(loginInfo.email)
     ) {
       toast.error("invalid Email Address");
+    } else {
+      signInWithEmailAndPassword(auth, loginInfo.email, loginInfo.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user)
+          if(user.emailVerified){
+            navigate('/home')
+          }else{
+            toast.error("Please Verify Your Email")
+          }
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode)
+          if (errorCode.includes("auth/invalid-credential")) {
+            toast.error("Invalid Email or Password");
+          }
+        });
+      console.log("Login Submited", loginInfo);
     }
-    console.log("Login Submited", loginInfo);
-    
   };
 
-  const handleShowPassword =()=>{
-    setPassVisibility(!passVisibility)
-  }
-
+  const handleShowPassword = () => {
+    setPassVisibility(!passVisibility);
+  };
 
   return (
     <section className="bg-[#002D74] min-h-screen flex box-border justify-center items-center">
@@ -72,7 +95,8 @@ const Login = () => {
                   id="password"
                   placeholder="Password"
                 />
-                <svg onClick={handleShowPassword}
+                <svg
+                  onClick={handleShowPassword}
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
                   height={16}
@@ -107,7 +131,9 @@ const Login = () => {
           </form>
           <div className="mt-6  items-center text-gray-100">
             <hr className="border-[#002D74]" />
-            <p className="text-[#002D74] text-center font-semibold text-sm my-1">OR</p>
+            <p className="text-[#002D74] text-center font-semibold text-sm my-1">
+              OR
+            </p>
             <hr className="border-[#002D74]" />
           </div>
           <button className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium">
