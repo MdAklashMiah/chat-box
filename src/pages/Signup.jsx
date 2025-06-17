@@ -105,9 +105,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-[#002D74] sm:h-screen p-4">
+    <div className="flex flex-col justify-center bg-[#D4C9BE] sm:h-screen p-4">
       <Toaster />
-      <div className="max-w-lg w-full mx-auto bg-[#dfa674] border border-slate-300 rounded-2xl p-8">
+      <div className="max-w-lg w-full mx-auto bg-[#F1EFEC] border border-slate-300 rounded-2xl p-8">
         <div className="text-center mb-12">
           <h2 className="font-bold text-3xl text-[#002D74]">
             Create Your Account

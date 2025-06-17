@@ -39,7 +39,7 @@ const Login = () => {
           const user = userCredential.user;
           console.log(user)
           if(user.emailVerified){
-            navigate('/home')
+            navigate('/')
           }else{
             toast.error("Please Verify Your Email")
           }
@@ -62,8 +62,8 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-[#002D74] min-h-screen flex box-border justify-center items-center">
-      <div className="max-w-lg w-full mx-auto bg-[#dfa674] border border-slate-300 rounded-2xl p-8">
+    <section className="bg-[#D4C9BE] min-h-screen flex box-border justify-center items-center">
+      <div className="max-w-lg w-full mx-auto bg-[#F1EFEC] border border-slate-300 rounded-2xl p-8">
         <Toaster />
         <div className=" ">
           <h2 className="font-bold text-3xl text-[#002D74]">Login</h2>
