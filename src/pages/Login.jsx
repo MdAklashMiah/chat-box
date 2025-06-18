@@ -3,8 +3,11 @@ import { Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { userLoginInfo } from "../slices/UserSlice";
 
 const Login = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const auth = getAuth();
   const [passVisibility, setPassVisibility] = useState(false);
@@ -37,8 +40,10 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user)
+          // console.log(user)
           if(user.emailVerified){
+            dispatch(userLoginInfo(user))
+            // localStorage.setItem("login", JSON.stringify(user));
             navigate('/')
           }else{
             toast.error("Please Verify Your Email")

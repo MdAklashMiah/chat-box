@@ -4,10 +4,11 @@ const Sidebar = () => {
   return (
       <aside
         id="default-sidebar"
-        className="max-w-xs lg:w-xs h-full min-h-screen relative"
+        className="min-w-xs h-full min-h-screen relative"
         aria-label="Sidebar"
+        
       >
-        <div className="h-full px-3 py-4 overflow-y-auto fixed top-0 left-0">
+        <div className="min-w-xs h-full px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-[#002c74d9]">
           <ul className="space-y-2 font-medium">
             <li>
               <a

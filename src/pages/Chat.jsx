@@ -7,7 +7,7 @@ import { CgProfile } from "react-icons/cg";
 
 const Chat = () => {
   return (
-    <div className="w-full grid grid-cols-4 bg-[#D4C9BE] rounded-xl shadow pl-5 overflow-hidden">
+    <div className="w-full relative grid grid-cols-4 bg-[#D4C9BE] rounded-xl shadow pl-5 overflow-hidden">
       <div className="w-full bg-[#F1EFEC] col-span-1 p-5 rounded-lg overflow-auto h-screen">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Chat</h2>
