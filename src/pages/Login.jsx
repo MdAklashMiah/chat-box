@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { userLoginInfo } from "../slices/UserSlice";
 
+
 const Login = () => {
+  const provider = new GoogleAuthProvider();
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const auth = getAuth();
@@ -42,7 +44,7 @@ const Login = () => {
           const user = userCredential.user;
           // console.log(user)
           if(user.emailVerified){
-            dispatch(userLoginInfo(user))
+            dispatch(userLoginInfo(user));
             // localStorage.setItem("login", JSON.stringify(user));
             navigate('/')
           }else{
@@ -65,6 +67,19 @@ const Login = () => {
   const handleShowPassword = () => {
     setPassVisibility(!passVisibility);
   };
+
+  const handleLoginWithGoogle = ()=>{
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    const user = result.user;
+    dispatch(userLoginInfo(user));
+    navigate('/')
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    console.log(errorCode)
+  });
+  }
 
   return (
     <section className="bg-[#D4C9BE] min-h-screen flex box-border justify-center items-center">
@@ -141,7 +156,8 @@ const Login = () => {
             </p>
             <hr className="border-[#002D74]" />
           </div>
-          <button className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium">
+          <button onClick={handleLoginWithGoogle}
+            className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium cursor-pointer">
             <svg
               className="mr-3"
               xmlns="http://www.w3.org/2000/svg"
