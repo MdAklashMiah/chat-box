@@ -1,19 +1,14 @@
 import { useNavigate } from "react-router";
+import Userlist from "./Userlist";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 
 const Home = () => {
-  const navigate = useNavigate()
-
-  // useEffect(()=>{
-  //   if(!data){
-  //     navigate('/login')
-  //   }
-  // })
+  const navigate = useNavigate();
   return (
     <>
-    <h1>aaaaaaaaa</h1>
-    {/* <h2 className="text-black">{data.displayName}</h2> */}
-    {/* <Chat/> */}
+    <Userlist/>
     
     </>
   );

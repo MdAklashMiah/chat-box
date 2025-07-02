@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import Login from "./Login";
+import { getDatabase, ref, set } from "firebase/database";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -11,6 +13,7 @@ import {
 import { useNavigate } from "react-router";
 
 const Signup = () => {
+  const db = getDatabase();
   const [passVisibility, setPassVisibility] = useState(false);
   const auth = getAuth();
   const navigate = useNavigate();
@@ -79,10 +82,17 @@ const Signup = () => {
                   cpassword: "",
                 });
                 console.log(user);
-                navigate('/')
+                set(ref(db, "userslist/" + user.uid), {
+                  name: user.displayName,
+                  email: user.email,
+                }).then(() => {
+                  navigate("/login");
+                }).catch((error) =>{
+                  console.log(error)
+                })
               })
               .catch((error) => {
-                console.log(error)
+                console.log(error);
               });
           });
         })

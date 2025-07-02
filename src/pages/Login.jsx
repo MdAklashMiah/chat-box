@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { userLoginInfo } from "../slices/UserSlice";
-
+import { getDatabase, ref, set } from "firebase/database";
 
 const Login = () => {
+  const db = getDatabase();
   const provider = new GoogleAuthProvider();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
   const [passVisibility, setPassVisibility] = useState(false);
@@ -43,19 +49,18 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           // console.log(user)
-          if(user.emailVerified){
+          if (user.emailVerified) {
             dispatch(userLoginInfo(user));
-            // localStorage.setItem("login", JSON.stringify(user));
-            navigate('/')
-          }else{
-            toast.error("Please Verify Your Email")
+            navigate("/");
+          } else {
+            toast.error("Please Verify Your Email");
           }
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode)
+          console.log(errorCode);
           if (errorCode.includes("auth/invalid-credential")) {
             toast.error("Invalid Email or Password");
           }
@@ -68,18 +73,28 @@ const Login = () => {
     setPassVisibility(!passVisibility);
   };
 
-  const handleLoginWithGoogle = ()=>{
+  const handleLoginWithGoogle = () => {
     signInWithPopup(auth, provider)
-  .then((result) => {
-    const user = result.user;
-    dispatch(userLoginInfo(user));
-    navigate('/')
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    console.log(errorCode)
-  });
-  }
+      .then((result) => {
+        const user = result.user;
+        set(ref(db, "userslist/" + user.uid), {
+          name: user.displayName,
+          email: user.email,
+        })
+          .then(() => {
+            dispatch(userLoginInfo(user));
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        console.log(errorCode);
+      });
+  };
 
   return (
     <section className="bg-[#D4C9BE] min-h-screen flex box-border justify-center items-center">
@@ -156,8 +171,10 @@ const Login = () => {
             </p>
             <hr className="border-[#002D74]" />
           </div>
-          <button onClick={handleLoginWithGoogle}
-            className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium cursor-pointer">
+          <button
+            onClick={handleLoginWithGoogle}
+            className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium cursor-pointer"
+          >
             <svg
               className="mr-3"
               xmlns="http://www.w3.org/2000/svg"
