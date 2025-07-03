@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, push } from "firebase/database";
+import { getDatabase, ref, onValue, push, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const Userlist = () => {
@@ -13,18 +13,21 @@ const Userlist = () => {
       const array = [];
       snapshot.forEach((item) => {
         if (item.key != auth.currentUser.uid) {
-          array.push(item.val());
+          array.push({...item.val(), id: item.key});
         }
       });
       setUserList(array);
     });
   }, []);
 
-  const handleFriendRequest = () => {
-    console.log(auth.currentUser);
+  const handleFriendRequest = (item) => {
     set(push(ref(db, "friendrequestlist/")), {
       sendername : auth.currentUser.displayName,
-      senderid: auth.currentUser.uid
+      senderid: auth.currentUser.uid,
+      recievername: item.name,
+      recieverid: item.id,
+    }).then(()=>{
+      console.log("friend request done")
     })
   };
   return (
@@ -47,7 +50,7 @@ const Userlist = () => {
                   <p className="text-slate-500 text-sm">{item.email}</p>
                 </div>
                 <button
-                  onClick={handleFriendRequest}
+                  onClick={()=>handleFriendRequest(item)}
                   className="bg-blue-400 px-3 py-1 border rounded"
                 >
                   Add Friend
