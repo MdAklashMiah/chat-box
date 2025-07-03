@@ -3,11 +3,15 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { userLoginInfo } from "../slices/UserSlice";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = getAuth();
+  const user = useSelector((state)=>state.userLogin.value)
+  console.log(user)
+  
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -44,6 +48,7 @@ const Sidebar = () => {
       aria-label="Sidebar"
     >
       <div className="min-w-xs h-full px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-[#002c74d9]">
+        <h1 className="text-2xl text-white mb-2.5 font-medium capitalize">{user?.name}</h1>
         <ul className="space-y-2 font-medium">
           <li>
             <a

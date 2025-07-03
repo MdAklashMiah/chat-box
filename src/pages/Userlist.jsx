@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, push } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const Userlist = () => {
   const [userList, setUserList] = useState([]);
   const db = getDatabase();
+  const auth = getAuth();
 
   useEffect(() => {
     const userListRef = ref(db, "userslist/");
     onValue(userListRef, (snapshot) => {
       const array = [];
       snapshot.forEach((item) => {
-        array.push(item.val());
+        if (item.key != auth.currentUser.uid) {
+          array.push(item.val());
+        }
       });
       setUserList(array);
     });
   }, []);
 
-  console.log(userList);
+  const handleFriendRequest = () => {
+    console.log(auth.currentUser);
+    set(push(ref(db, "friendrequestlist/")), {
+      sendername : auth.currentUser.displayName,
+      senderid: auth.currentUser.uid
+    })
+  };
   return (
     <>
       <div className="relative w-md h-1/2 rounded-lg border border-slate-200 bg-white shadow-sm p-2 mt-2">
@@ -36,7 +46,10 @@ const Userlist = () => {
                   <h6 className="text-slate-800 font-medium">{item.name}</h6>
                   <p className="text-slate-500 text-sm">{item.email}</p>
                 </div>
-                <button className="bg-blue-400 px-3 py-1 border rounded">
+                <button
+                  onClick={handleFriendRequest}
+                  className="bg-blue-400 px-3 py-1 border rounded"
+                >
                   Add Friend
                 </button>
               </li>
