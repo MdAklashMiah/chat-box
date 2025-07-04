@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import FriendRequest from "../components/FriendRequest";
 import FriendList from "../components/FriendsList";
+import BlockList from "../components/BlockList";
 
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
     <Userlist/>
     <FriendRequest/>
     <FriendList/>
+    <BlockList/>
     </>
   );
 };
