@@ -4,6 +4,8 @@ import { getAuth } from "firebase/auth";
 
 const Userlist = () => {
   const [userList, setUserList] = useState([]);
+  const [checkRequestId, setcheckRequestId] = useState([]);
+  const [checkFriendId, setcheckFriendId] = useState([]);
   const db = getDatabase();
   const auth = getAuth();
 
@@ -13,23 +15,47 @@ const Userlist = () => {
       const array = [];
       snapshot.forEach((item) => {
         if (item.key != auth.currentUser.uid) {
-          array.push({...item.val(), id: item.key});
+          array.push({ ...item.val(), id: item.key });
         }
       });
       setUserList(array);
     });
   }, []);
 
+  useEffect(() => {
+    const friendReqListRef = ref(db, "friendrequestlist/");
+    onValue(friendReqListRef, (snapshot) => {
+      const array = [];
+      snapshot.forEach((item) => {
+        array.push(item.val().senderid + item.val().recieverid);
+      });
+      setcheckRequestId(array);
+    });
+  }, []);
+  useEffect(() => {
+    const friendReqListRef = ref(db, "friendslist/");
+    onValue(friendReqListRef, (snapshot) => {
+      const array = [];
+      snapshot.forEach((item) => {
+        array.push(item.val().senderid + item.val().recieverid);
+      });
+      setcheckFriendId(array);
+    });
+  }, []);
+  console.log(checkFriendId);
+
   const handleFriendRequest = (item) => {
     set(push(ref(db, "friendrequestlist/")), {
-      sendername : auth.currentUser.displayName,
+      sendername: auth.currentUser.displayName,
       senderid: auth.currentUser.uid,
       recievername: item.name,
       recieverid: item.id,
-    }).then(()=>{
-      console.log("friend request done")
-    })
+    }).then(() => {
+      console.log("friend request done");
+    });
   };
+
+  console.log(checkRequestId);
   return (
     <>
       <div className="relative w-md h-1/2 rounded-lg border border-slate-200 bg-white shadow-sm p-2 mt-2">
@@ -49,12 +75,20 @@ const Userlist = () => {
                   <h6 className="text-slate-800 font-medium">{item.name}</h6>
                   <p className="text-slate-500 text-sm">{item.email}</p>
                 </div>
-                <button
-                  onClick={()=>handleFriendRequest(item)}
-                  className="bg-blue-400 px-3 py-1 border rounded"
-                >
-                  Add Friend
-                </button>
+                {checkFriendId.includes(auth.currentUser.uid + item.id) ||
+                checkFriendId.includes(item.id + auth.currentUser.uid) ? (
+                  <button>cancel</button>
+                ) : checkRequestId.includes(auth.currentUser.uid + item.id) ||
+                  checkRequestId.includes(item.id + auth.currentUser.uid) ? (
+                  <button>cancel</button>
+                ) : (
+                  <button
+                    onClick={() => handleFriendRequest(item)}
+                    className="bg-blue-400 px-3 py-1 border rounded"
+                  >
+                    Add Friend
+                  </button>
+                )}
               </li>
             );
           })}
