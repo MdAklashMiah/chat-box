@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const RootLayout = () => {
   return (
-    <main className="flex gap-5  relative">
+    <main className="flex relative bg-[#262e3b]">
       <Sidebar />
       <Outlet />
     </main>

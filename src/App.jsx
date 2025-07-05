@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Chatroom from './pages/Chatroom';
 import Message from './pages/Message';
 import RootLayout from './components/RootLayout';
+import Chat from './pages/Chat';
 
 
 const router = createBrowserRouter([
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: Home },
-      { path: "message", Component: Message },
+      { path: "/Chat", Component: Chat },
     ],
   },
   {

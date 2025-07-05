@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import FriendRequest from "../components/FriendRequest";
 import FriendList from "../components/FriendsList";
 import BlockList from "../components/BlockList";
+import Chat from "../pages/Chat"
 
 
 const Home = () => {
