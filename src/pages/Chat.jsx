@@ -8,19 +8,21 @@ import ChatList from "../components/ChatList";
 import { useSelector } from "react-redux";
 import { getDatabase, onValue, push, ref, set } from "firebase/database";
 import { auth } from "../firebase.config";
+import moment from "moment/moment";
 
 const Chat = () => {
-  const [messegeCollection, setMessegeCollection] = useState([]);
+  const [massageCollection, setmassageCollection] = useState([]);
   const db = getDatabase();
-  const [message, setMessege] = useState(null);
+  const [message, setmassage] = useState(null);
   const user = useSelector((state) => state.chatUser.value);
 
-  const handleMessege = (e) => {
-    setMessege(e.target.value);
+  const handlemassage = (e) => {
+    setmassage(e.target.value);
+    console.log(e.target.value);
   };
 
   const handleSendMsg = () => {
-    set(push(ref(db, "messegelist/")), {
+    set(push(ref(db, "massagelist/")), {
       sendername: auth.currentUser.displayName,
       senderid: auth.currentUser.uid,
       recievername: user.name,
@@ -30,27 +32,29 @@ const Chat = () => {
         new Date().getMonth() + 1
       }-${new Date().getDate()}-${new Date().getHours()}-${new Date().getMinutes()}`,
     }).then(() => {
-      setMessege("");
-      alert("Messege Send Successfully");
+      setmassage("");
+      alert("massage Send Successfully");
     });
   };
 
   useEffect(() => {
-    const messegeCollectionRef = ref(db, "messegelist/");
-    onValue(messegeCollectionRef, (snapshot) => {
+    const massageCollectionRef = ref(db, "massagelist/");
+    onValue(massageCollectionRef, (snapshot) => {
       const array = [];
       snapshot.forEach((item) => {
         if (
-          auth.currentUser.uid == item.val().senderid ||
-          auth.currentUser.uid == item.val().recieverid
+          (auth.currentUser.uid == item.val().senderid &&
+            user?.id == item.val().recieverid) ||
+          (auth.currentUser.uid == item.val().recieverid &&
+            user?.id == item.val().senderid)
         ) {
           array.push({ ...item.val(), id: item.key });
         }
       });
-      setMessegeCollection(array);
+      setmassageCollection(array);
     });
-  }, []);
-  console.log(messegeCollection);
+  }, [user?.id]);
+  console.log(massageCollection);
 
   return (
     <div className="w-full relative grid grid-cols-4 bg-[#2d3748] rounded-xl shadow  overflow-hidden">
@@ -78,7 +82,7 @@ const Chat = () => {
           <div className="p-5 min-h-full">
             <div className="flex flex-col h-full">
               <div className="grid grid-cols-12 gap-y-2">
-                {messegeCollection.map((msgitem) =>
+                {massageCollection.map((msgitem) =>
                   msgitem.senderid == auth.currentUser.uid ? (
                     <div className="col-start-6 col-end-13 p-3 rounded-lg">
                       <div className="flex items-center justify-start flex-row-reverse">
@@ -86,7 +90,13 @@ const Chat = () => {
                           <CgProfile />
                         </div>
                         <div className="relative mr-3 text-sm bg-[#D4C9BE] py-2 px-4 shadow rounded-xl">
-                          <div>{msgitem.msg}</div>
+                          <h2>{msgitem.msg}</h2>
+                          <p>
+                            {moment(
+                              msgitem.date,
+                              "YYYYMMDD , h:mm:ss"
+                            ).fromNow()}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -97,7 +107,13 @@ const Chat = () => {
                           <CgProfile />
                         </div>
                         <div className="relative ml-3 text-sm bg-[#D4C9BE] py-2 px-4 shadow rounded-xl">
-                          <div>{msgitem.msg}</div>
+                          <h2>{msgitem.msg}</h2>
+                          <p>
+                            {moment(
+                              msgitem.date,
+                              "YYYYMMDD , h:mm:ss"
+                            ).fromNow()}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -112,7 +128,7 @@ const Chat = () => {
             </label>
             {/* <input type="file" id="file-upload" className="hidden" /> */}
             <input
-              onChange={handleMessege}
+              onChange={handlemassage}
               type="text"
               value={message}
               placeholder="Enter Your Text"
