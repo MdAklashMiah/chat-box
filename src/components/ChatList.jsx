@@ -8,6 +8,7 @@ const ChatList = () => {
   const user = useSelector((state) => state.chatUser.value);
   const dispatch = useDispatch();
   const [chatList, setChatList] = useState([]);
+  const [searchUser, setSearchUser] = useState([]);
   const db = getDatabase();
   const auth = getAuth();
 
@@ -26,19 +27,30 @@ const ChatList = () => {
       setChatList(array);
     });
   }, []);
-  console.log(chatList)
 
-  const handleSelectUser = (item)=>{
-    if(auth.currentUser.uid == item.senderid){
-     dispatch(chatingUserInfo({ name: item.recievername, id: item.recieverid}));
-    }else{
-      dispatch(chatingUserInfo({ name: item.sendername, id: item.senderid}));
+  const handleSelectUser = (item) => {
+    if (auth.currentUser.uid == item.senderid) {
+      dispatch(
+        chatingUserInfo({ name: item.recievername, id: item.recieverid })
+      );
+    } else {
+      dispatch(chatingUserInfo({ name: item.sendername, id: item.senderid }));
     }
-  }
+  };
 
-  const handleSearch = (e)=>{
-    console.log(e.target.value)
-  }
+  const handleSearch = (e) => {
+    console.log(e.target.value);
+    let searchList = chatList.filter(
+      (item) =>
+        item.sendername.toUpperCase().replaceAll(" ", "") ==
+          e.target.value.toUpperCase() ||
+        item.recievername.toUpperCase().replaceAll(" ", "") ==
+          e.target.value.toUpperCase()
+    );
+    setSearchUser(searchList);
+  };
+
+  console.log(searchUser);
 
   return (
     <div className="w-full bg-[#2d3748] col-span-1 p-5 overflow-auto h-screen border-r-2 border-[#39455a]">
@@ -72,37 +84,87 @@ const ChatList = () => {
       <div className="space-y-1 overflow-auto">
         {/* Message Item */}
 
-        {chatList.map((item)=>(        
-        <div onClick={()=>handleSelectUser(item)} className={`flex items-center justify-between p-4 rounded-md border-1 border-[#39455a] ${user?.id == item.senderid  || user?.id == item.recieverid ? "bg-[#262e3b]" : "bg-transparent"}`}>
-          <div className="flex items-center space-x-3">
-            <div className="relative">
-              <img
-                src="https://i.pravatar.cc/40?img=1"
-                className="w-10 h-10 rounded-full"
-              />
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
-            </div>
-            <div>
-                {auth.currentUser.uid == item.senderid 
-                ?
-                <h4 className="font-semibold text-white text-sm">{item.recievername}</h4>
-                :
-                <h4 className="font-semibold text-white text-sm">{item.sendername}</h4>
-                }
-              <p className="text-xs text-gray-500">
-                Hello devid, how are you today?
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-gray-400">Dec, 8</p>
-            <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium ml-auto block w-fit">
-              5
-            </span>
-          </div>
-        </div>
-        ))}
-        
+        {searchUser.length > 0
+          ? searchUser.map((item) => (
+              <div
+                onClick={() => handleSelectUser(item)}
+                className={`flex items-center justify-between p-4 rounded-md border-1 border-[#39455a] ${
+                  user?.id == item.senderid || user?.id == item.recieverid
+                    ? "bg-[#262e3b]"
+                    : "bg-transparent"
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <img
+                      src="https://i.pravatar.cc/40?img=1"
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
+                  </div>
+                  <div>
+                    {auth.currentUser.uid == item.senderid ? (
+                      <h4 className="font-semibold text-white text-sm">
+                        {item.recievername}
+                      </h4>
+                    ) : (
+                      <h4 className="font-semibold text-white text-sm">
+                        {item.sendername}
+                      </h4>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      Hello devid, how are you today?
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-400">Dec, 8</p>
+                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium ml-auto block w-fit">
+                    5
+                  </span>
+                </div>
+              </div>
+            ))
+          : chatList.map((item) => (
+              <div
+                onClick={() => handleSelectUser(item)}
+                className={`flex items-center justify-between p-4 rounded-md border-1 border-[#39455a] ${
+                  user?.id == item.senderid || user?.id == item.recieverid
+                    ? "bg-[#262e3b]"
+                    : "bg-transparent"
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <img
+                      src="https://i.pravatar.cc/40?img=1"
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
+                  </div>
+                  <div>
+                    {auth.currentUser.uid == item.senderid ? (
+                      <h4 className="font-semibold text-white text-sm">
+                        {item.recievername}
+                      </h4>
+                    ) : (
+                      <h4 className="font-semibold text-white text-sm">
+                        {item.sendername}
+                      </h4>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      Hello devid, how are you today?
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-400">Dec, 8</p>
+                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium ml-auto block w-fit">
+                    5
+                  </span>
+                </div>
+              </div>
+            ))}
       </div>
     </div>
   );
