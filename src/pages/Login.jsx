@@ -97,14 +97,14 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-[#D4C9BE] min-h-screen flex box-border justify-center items-center">
-      <div className="max-w-lg w-full mx-auto bg-[#F1EFEC] border border-slate-300 rounded-2xl p-8">
+    <section className="bg-linear-to-t from-[#1D3557] to-[#2d3748] min-h-screen flex box-border justify-center items-center">
+      <div className="max-w-lg w-full mx-auto bg-[#2d3748] border border-slate-300 rounded-2xl p-8">
         <Toaster />
         <div className=" ">
-          <h2 className="font-bold text-3xl text-[#002D74]">Login</h2>
+          <h2 className="font-bold text-3xl text-[#F1FAEE]">Login</h2>
           <form onSubmit={handleLogin} className="flex flex-col gap-4 mt-8">
             <div>
-              <label className="text-slate-800 text-sm font-medium mb-2 block">
+              <label className="text-[#F1FAEE] text-sm font-medium mb-2 block">
                 Email
               </label>
               <input
@@ -112,19 +112,19 @@ const Login = () => {
                 value={loginInfo.email}
                 name="email"
                 type="email"
-                className="p-3 rounded-xl border w-full"
+                className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
                 placeholder="Email"
               />
             </div>
             <div className="relative">
-              <label className="text-slate-800 text-sm font-medium mb-2 block">
+              <label className="text-[#F1FAEE] text-sm font-medium mb-2 block">
                 Password
               </label>
               <div className="relative">
                 <input
                   onChange={handlePassword}
                   value={loginInfo.password}
-                  className="p-3 rounded-xl border w-full"
+                  className="p-3 rounded-xl text-white border border-[#39455a] w-full placeholder-gray-500"
                   type={passVisibility ? "text" : "password"}
                   name="password"
                   id="password"
@@ -135,7 +135,7 @@ const Login = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
                   height={16}
-                  fill="#002D74"
+                  fill="#39455a"
                   id="togglePassword"
                   className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
                   viewBox="0 0 16 16"
@@ -158,18 +158,18 @@ const Login = () => {
               </div>
             </div>
             <button
-              className="bg-[#002D74] text-white py-3 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
+              className="bg-[#206ab1] text-white py-3 rounded-xl hover:scale-105 duration-300 hover:bg-[#457B9D] font-medium"
               type="submit"
             >
               Login
             </button>
           </form>
           <div className="mt-6  items-center text-gray-100">
-            <hr className="border-[#002D74]" />
-            <p className="text-[#002D74] text-center font-semibold text-sm my-1">
+            <hr className="border-[#206ab1]" />
+            <p className="text-[#206ab1] text-center font-semibold text-sm my-1">
               OR
             </p>
-            <hr className="border-[#002D74]" />
+            <hr className="border-[#206ab1]" />
           </div>
           <button
             onClick={handleLoginWithGoogle}
@@ -200,14 +200,14 @@ const Login = () => {
             </svg>
             Login with Google
           </button>
-          <div className="mt-10 text-sm border-b border-gray-500 py-5 playfair tooltip">
+          <div className="mt-10 text-sm text-[#F1FAEE] border-b border-gray-500 py-5 playfair tooltip">
             Forget password?
           </div>
-          <div className="mt-4 text-sm flex justify-between items-center container-mr">
+          <div className="mt-4 text-sm text-[#F1FAEE]  flex justify-between items-center container-mr">
             <p className="mr-3 md:mr-0 ">If you don't have an account..</p>
             <Link
               to={"/signup"}
-              className="hover:border register text-white bg-[#002D74] hover:border-gray-400 rounded-xl py-3 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300"
+              className="hover:border register text-white bg-[#206ab1] hover:border-gray-400 rounded-xl py-3 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300"
             >
               Register
             </Link>

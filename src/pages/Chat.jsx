@@ -57,7 +57,7 @@ const Chat = () => {
   console.log(massageCollection);
 
   return (
-    <div className="w-full relative grid grid-cols-4 bg-[#2d3748] rounded-xl shadow  overflow-hidden">
+    <div className="w-full relative grid grid-cols-4 items-center bg-linear-to-t from-[#1D3557] rounded-xl shadow  overflow-hidden">
       <ChatList />
       {user ? (
         <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen overflow-y-scroll">
@@ -79,7 +79,7 @@ const Chat = () => {
               <IoCallOutline />
             </div>
           </div>
-          <div className="p-5 min-h-full">
+          <div className="p-5 min-h-full bg-linear-to-t from-[#1D3557]">
             <div className="flex flex-col h-full">
               <div className="grid grid-cols-12 gap-y-2">
                 {massageCollection.map((msgitem) =>
@@ -143,8 +143,8 @@ const Chat = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full flex justify-center items-center text-center">
-          <h2 className="text-center text-4xl">Welcome to Chat-Box</h2>
+        <div className="w-full col-span-3">
+          <h2 className="text-center text-4xl font-bold text-green-700">Welcome to Chat-Box</h2>
         </div>
       )}
     </div>

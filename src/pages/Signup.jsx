@@ -115,18 +115,18 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-[#D4C9BE] sm:h-screen p-4">
+    <div className="flex flex-col justify-center bg-linear-to-t from-[#1D3557] to-[#2d3748] sm:h-screen p-4">
       <Toaster />
-      <div className="max-w-lg w-full mx-auto bg-[#F1EFEC] border border-slate-300 rounded-2xl p-8">
+      <div className="max-w-lg w-full mx-auto bg-[#2d3748] border border-slate-300 rounded-2xl p-8">
         <div className="text-center mb-12">
-          <h2 className="font-bold text-3xl text-[#002D74]">
+          <h2 className="font-bold text-3xl text-[#F1FAEE]">
             Create Your Account
           </h2>
         </div>
         <form onSubmit={handleSignup}>
           <div className="space-y-2">
             <div>
-              <label className="text-slate-800 text-sm font-medium mb-2 block">
+              <label className="text-[#F1FAEE] text-sm font-medium mb-2 block">
                 User Name
               </label>
               <input
@@ -134,12 +134,12 @@ const Signup = () => {
                 onChange={handleUsername}
                 name="User"
                 type="text"
-                className="p-3 rounded-xl border w-full"
+                className="p-3 rounded-xl text-white border border-[#39455a] w-full placeholder-gray-500"
                 placeholder="Enter Your User Name"
               />
             </div>
             <div>
-              <label className="text-slate-800 text-sm font-medium mb-2 block">
+              <label className="text-[#F1FAEE] text-sm font-medium mb-2 block">
                 Email Id
               </label>
               <input
@@ -147,12 +147,12 @@ const Signup = () => {
                 onChange={handleEmail}
                 name="email"
                 type="email"
-                className="p-3 rounded-xl border w-full"
+                className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
                 placeholder="Enter email"
               />
             </div>
             <div className="relative">
-              <label className="text-slate-800 text-sm font-medium mb-2 block">
+              <label className="text-[#F1FAEE] text-sm font-medium mb-2 block">
                 Password
               </label>
               <div className="relative">
@@ -161,7 +161,7 @@ const Signup = () => {
                   onChange={handlePassword}
                   name="password"
                   type={passVisibility ? "text" : "password"}
-                  className="p-3 rounded-xl border w-full"
+                  className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
                   placeholder="Enter password"
                 />
 
@@ -170,7 +170,7 @@ const Signup = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
                   height={16}
-                  fill="#002D74"
+                  fill="#39455a"
                   id="togglePassword"
                   className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
                   viewBox="0 0 16 16"
@@ -181,7 +181,7 @@ const Signup = () => {
               </div>
             </div>
             <div className="relative">
-              <label className="text-slate-800 text-sm font-medium mb-2 block">
+              <label className="text-[#F1FAEE] text-sm font-medium mb-2 block">
                 Confirm Password
               </label>
 
@@ -191,7 +191,7 @@ const Signup = () => {
                   onChange={handleConfirmPassword}
                   name="cpassword"
                   type={passVisibility ? "text" : "password"}
-                  className="p-3 rounded-xl border w-full"
+                  className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
                   placeholder="Enter confirm password"
                 />
                 <svg
@@ -199,7 +199,7 @@ const Signup = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   width={16}
                   height={16}
-                  fill="#002D74"
+                  fill="#39455a"
                   id="togglePassword"
                   className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
                   viewBox="0 0 16 16"
@@ -218,12 +218,12 @@ const Signup = () => {
               />
               <label
                 htmlFor="remember-me"
-                className="text-slate-800 ml-3 block text-sm"
+                className="text-gray-500 ml-3 block text-sm"
               >
                 I accept the{" "}
                 <a
                   href="javascript:void(0);"
-                  className="text-[#002D74] font-medium hover:underline ml-1"
+                  className="text-[#206ab1] font-medium hover:underline ml-1"
                 >
                   Terms and Conditions
                 </a>
@@ -233,16 +233,16 @@ const Signup = () => {
           <div className="mt-4">
             <button
               type="submit"
-              className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-[#002D74] hover:bg-[#206ab1] focus:outline-none cursor-pointer"
+              className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-[#206ab1] hover:bg-[#457B9D] focus:outline-none cursor-pointer"
             >
               Sign Up
             </button>
           </div>
-          <p className="text-slate-800 text-sm font-medium mt-6 text-center flex justify-between items-center">
+          <p className="text-gray-500 text-sm font-medium mt-6 text-center flex justify-between items-center">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="hover:border register text-white bg-[#002D74] hover:border-gray-400 rounded-xl py-3 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300"
+              className="hover:border register text-white bg-[#206ab1] hover:border-gray-400 rounded-xl py-3 px-5 hover:scale-110 hover:bg-[#457B9D] font-semibold duration-300"
             >
               Login here
             </Link>

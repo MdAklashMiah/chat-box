@@ -11,6 +11,8 @@ import Chatroom from './pages/Chatroom';
 import Message from './pages/Message';
 import RootLayout from './components/RootLayout';
 import Chat from './pages/Chat';
+import Userlist from './pages/Userlist';
+import FriendList from './components/FriendsList';
 
 
 const router = createBrowserRouter([
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "/Chat", Component: Chat },
+      { path: "/UserList", Component: Userlist },
+      { path: "/FriendList", Component: FriendList },
     ],
   },
   {

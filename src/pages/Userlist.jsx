@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue, push, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
+
 const Userlist = () => {
   const [userList, setUserList] = useState([]);
   const [checkRequestId, setcheckRequestId] = useState([]);
@@ -58,12 +59,12 @@ const Userlist = () => {
   console.log(checkRequestId);
   return (
     <>
-      <div className="relative w-md h-1/2 rounded-lg border border-slate-200 bg-white shadow-sm p-2 mt-2">
-        <h1 className="text-2xl font-bold">User List</h1>
-        <ul>
+      <div className="relative w-full rounded-lg bg-linear-to-t from-[#1D3557] shadow-sm ">
+        <h1 className="text-2xl text-center text-[#F1FAEE] font-bold bg-[#2d3748] border-b-2 border-[#39455a] p-5">People You May Know</h1>
+        <ul className="max-w-2xl text-center mx-auto flex flex-col gap-1 ">
           {userList.map((item) => {
             return (
-              <li className="text-slate-800 flex w-full items-center justify-between rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100">
+              <li className="text-white flex w-full items-center bg-gray-700 justify-between rounded-md p-3 transition-all ">
                 <div className="mr-4 grid place-items-center">
                   <img
                     alt="candice"
@@ -72,7 +73,7 @@ const Userlist = () => {
                   />
                 </div>
                 <div>
-                  <h6 className="text-slate-800 font-medium">{item.name}</h6>
+                  <h6 className="text-white font-medium">{item.name}</h6>
                   <p className="text-slate-500 text-sm">{item.email}</p>
                 </div>
                 {checkFriendId.includes(auth.currentUser.uid + item.id) ||

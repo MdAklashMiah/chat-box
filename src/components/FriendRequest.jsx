@@ -34,11 +34,11 @@ const FriendRequest = () => {
 
   return (
     <>
-      <div className="relative w-md h-1/2 rounded-lg border border-slate-200 bg-white shadow-sm p-2 mt-2">
-        <h1 className="text-2xl font-bold">Friends Request</h1>
-        <ul>
+      <div className="relative w-full rounded-lg bg-linear-to-t from-[#1D3557] shadow-sm">
+        <h2 className="text-2xl text-center text-[#F1FAEE] font-bold bg-[#2d3748] border-b-2 border-[#39455a] p-5">Friends Request</h2>
+        <ul className="max-w-2xl text-center mx-auto flex flex-col gap-1">
           {friendReqList.map((item) => (
-            <li className="text-slate-800 flex w-full items-center justify-between rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100">
+            <li className="text-white flex w-full items-center bg-gray-700 justify-between rounded-md p-3 transition-all">
               <div className="mr-4 grid place-items-center">
                 <img
                   alt="candice"
@@ -47,7 +47,7 @@ const FriendRequest = () => {
                 />
               </div>
               <div>
-                <h6 className="text-slate-800 font-medium">
+                <h6 className="text-white font-medium">
                   {item.sendername}
                 </h6>
                 <p className="text-slate-500 text-sm">bbbbbbbbb</p>
