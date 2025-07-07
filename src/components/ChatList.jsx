@@ -3,6 +3,7 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chatingUserInfo } from "../slices/ChatSlice";
+import { IoSearchOutline } from "react-icons/io5";
 
 const ChatList = () => {
   const user = useSelector((state) => state.chatUser.value);
@@ -66,19 +67,7 @@ const ChatList = () => {
           placeholder="Search.."
           className="w-full pl-10 pr-4 py-2 border-1 border-[#39455a] rounded-md bg-[#262e3b] text-sm text-white placeholder-[#39455a] focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <svg
-          className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1016.65 2.5a7.5 7.5 0 000 15z"
-          />
-        </svg>
+        <IoSearchOutline className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"/>
       </div>
       {/* Message Items */}
       <div className="space-y-1 overflow-auto">
@@ -130,11 +119,11 @@ const ChatList = () => {
                 onClick={() => handleSelectUser(item)}
                 className={`flex items-center justify-between p-4 rounded-md border-1 border-[#39455a] ${
                   user?.id == item.senderid || user?.id == item.recieverid
-                    ? "bg-[#262e3b]"
-                    : "bg-transparent"
+                    ? "bg-linear-to-r from-[#1D3557]"
+                    : "bg-[#262e3b]"
                 }`}
               >
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 ">
                   <div className="relative">
                     <img
                       src="https://i.pravatar.cc/40?img=1"

@@ -61,7 +61,7 @@ const Userlist = () => {
     <>
       <div className="relative w-full rounded-lg bg-linear-to-t from-[#1D3557] shadow-sm ">
         <h1 className="text-2xl text-center text-[#F1FAEE] font-bold bg-[#2d3748] border-b-2 border-[#39455a] p-5">People You May Know</h1>
-        <ul className="max-w-2xl text-center mx-auto flex flex-col gap-1 ">
+        <ul className="max-w-2xl text-center mx-auto flex flex-col gap-1 mt-1">
           {userList.map((item) => {
             return (
               <li className="text-white flex w-full items-center bg-gray-700 justify-between rounded-md p-3 transition-all ">

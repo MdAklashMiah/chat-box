@@ -7,13 +7,14 @@ import FriendList from "../components/FriendsList";
 import BlockList from "../components/BlockList";
 import Chat from "../pages/Chat"
 import Navbar from "../components/Navbar";
+import Message from "./Message";
 
 
 const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-   <FriendRequest/>
+   <Chat/>
     </>
   );
 };

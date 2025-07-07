@@ -71,7 +71,7 @@ const Chat = () => {
               <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
             </div> */}
               <div>
-                <h4 className="font-semibold text-lg">{user?.name}</h4>
+                <h4 className="text-white font-semibold text-lg">{user?.name}</h4>
               </div>
             </div>
             <div className="flex gap-5 text-2xl bg-[#F1EFEC] p-2 rounded-sm">
@@ -87,11 +87,11 @@ const Chat = () => {
                     <div className="col-start-6 col-end-13 p-3 rounded-lg">
                       <div className="flex items-center justify-start flex-row-reverse">
                         <div className="text-4xl">
-                          <CgProfile />
+                          <CgProfile className="text-[#457B9D]"/>
                         </div>
-                        <div className="relative mr-3 text-sm bg-[#D4C9BE] py-2 px-4 shadow rounded-xl">
-                          <h2>{msgitem.msg}</h2>
-                          <p>
+                        <div className="relative  mr-3 text-sm bg-linear-to-r from-[#457B9D] py-2 px-4 shadow rounded-xl">
+                          <h2 className="text-[16px] font-medium text-[#F1FAEE]">{msgitem.msg}</h2>
+                          <p className="text-[#F1FAEE]">
                             {moment(
                               msgitem.date,
                               "YYYYMMDD , h:mm:ss"
@@ -104,11 +104,11 @@ const Chat = () => {
                     <div className="col-start-1 col-end-8 p-3 rounded-lg">
                       <div className="flex flex-row items-center">
                         <div className="text-4xl">
-                          <CgProfile />
+                          <CgProfile className="text-[#457B9D]"/>
                         </div>
-                        <div className="relative ml-3 text-sm bg-[#D4C9BE] py-2 px-4 shadow rounded-xl">
-                          <h2>{msgitem.msg}</h2>
-                          <p>
+                        <div className="relative ml-3 text-sm bg-linear-to-l from-[#457B9D] py-2 px-4 shadow rounded-xl">
+                          <h2 className="text-[16px] font-medium text-[#F1FAEE]">{msgitem.msg}</h2>
+                          <p className="text-[#F1FAEE]">
                             {moment(
                               msgitem.date,
                               "YYYYMMDD , h:mm:ss"

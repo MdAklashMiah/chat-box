@@ -13,6 +13,8 @@ import RootLayout from './components/RootLayout';
 import Chat from './pages/Chat';
 import Userlist from './pages/Userlist';
 import FriendList from './components/FriendsList';
+import FriendRequest from './components/FriendRequest';
+import BlockList from './components/BlockList';
 
 
 const router = createBrowserRouter([
@@ -24,6 +26,8 @@ const router = createBrowserRouter([
       { path: "/Chat", Component: Chat },
       { path: "/UserList", Component: Userlist },
       { path: "/FriendList", Component: FriendList },
+      { path: "/FriendRequest", Component: FriendRequest },
+      { path: "/BlockList", Component: BlockList },
     ],
   },
   {
