@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chatingUserInfo } from "../slices/ChatSlice";
 import { IoSearchOutline } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
 
 const ChatList = () => {
   const user = useSelector((state) => state.chatUser.value);
@@ -56,7 +57,7 @@ const ChatList = () => {
   return (
     <div className="w-full bg-[#2d3748] col-span-1 p-5 overflow-auto h-screen border-r-2 border-[#39455a]">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-green-700">Chat-Box</h2>
+        <h2 className="text-2xl font-bold text-[#457B9D]">Chats</h2>
         <button className="text-gray-400 hover:text-gray-600">•••</button>
       </div>
       {/* Search Bar */}
@@ -84,13 +85,7 @@ const ChatList = () => {
                 }`}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="relative">
-                    <img
-                      src="https://i.pravatar.cc/40?img=1"
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
-                  </div>
+                  <CgProfile className="text-4xl text-[#457B9D]" />
                   <div>
                     {auth.currentUser.uid == item.senderid ? (
                       <h4 className="font-semibold text-white text-sm">
@@ -124,13 +119,7 @@ const ChatList = () => {
                 }`}
               >
                 <div className="flex items-center space-x-3 ">
-                  <div className="relative">
-                    <img
-                      src="https://i.pravatar.cc/40?img=1"
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
-                  </div>
+                  <CgProfile className="text-4xl text-[#457B9D]" />
                   <div>
                     {auth.currentUser.uid == item.senderid ? (
                       <h4 className="font-semibold text-white text-sm">

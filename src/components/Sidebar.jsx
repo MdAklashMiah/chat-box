@@ -13,13 +13,12 @@ import { Link, Links, useLocation, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = getAuth();
-  const user = useSelector((state)=>state.userLogin.value)
-  console.log(pathname)
-  
+  const user = useSelector((state) => state.userLogin.value);
+  console.log(pathname);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -34,7 +33,7 @@ const Sidebar = () => {
         );
       } else {
         dispatch(userLoginInfo(null));
-        navigate('/login')
+        navigate("/login");
       }
     });
   }, [dispatch]);
@@ -42,7 +41,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-       navigate('/login')
+        navigate("/login");
       })
       .catch((error) => {
         // An error happened.
@@ -55,82 +54,107 @@ const Sidebar = () => {
       className="min-w-xs h-full min-h-screen relative"
       aria-label="Sidebar"
     >
-      <div className="min-w-xs h-full px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-linear-to-t from-[#1D3557] border-r-4 border-[#F1FAEE]">
-        <h1 className="text-2xl text-white mb-2.5 font-medium capitalize">{user?.name}</h1>
-        <ul className="space-y-2 font-medium">
-          <li>
-            <Link
-              to="/"
-              href="#"
-              className={`flex items-center p-2 text-gray-900 rounded-lg ${pathname == "/" && 'bg-gray-700'} dark:text-white `}
-            >
-              <ImHome />
-              <span className="ms-3">Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/Chat"
-              href="#"
-              className={`flex items-center p-2 text-gray-900 rounded-lg ${pathname == "/Chat" && 'bg-gray-700'} dark:text-white `}
-            >
-              <AiFillMessage />
-              <span className="flex-1 ms-3 whitespace-nowrap">Message</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/FriendList"
-              href="#"
-              className={`flex items-center p-2 text-gray-900 rounded-lg ${pathname == "/FriendList" && 'bg-gray-700'} dark:text-white `}
-            >
-              <FaUserFriends />
-              <span className="flex-1 ms-3 whitespace-nowrap">Friends</span>
-              <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                3
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/UserList"
-              href="#"
-              className={`flex items-center p-2 text-gray-900 rounded-lg ${pathname == "/UserList" && 'bg-gray-700'} dark:text-white `}
-            >
-              <FaUsers />
-              <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/FriendRequest"
-              href="#"
-              className={`flex items-center p-2 text-gray-900 rounded-lg ${pathname == "/FriendRequest" && 'bg-gray-700'} dark:text-white `}
-            >
-              <RiUserReceivedFill />
-              <span className="flex-1 ms-3 whitespace-nowrap">Friend Request</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/BlockList"
-              href="#"
-              className={`flex items-center p-2 text-gray-900 rounded-lg ${pathname == "/BlockList" && 'bg-gray-700'} dark:text-white `}
-            >
-              <MdBlock />
-              <span className="flex-1 ms-3 whitespace-nowrap">Block List</span>
-            </Link>
-          </li>
-          <li>
+      <div className="min-w-xs h-full flex flex-col justify-between px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-linear-to-t from-[#1D3557] border-r-4 border-[#F1FAEE]">
+        <div>
+          <div className="logo py-4">
+            <a href="#" className="text-3xl font-bold text-[#457B9D]">Chat-Box</a>
+          </div>
+          <ul className="space-y-2 font-medium">
+            <li>
+              <Link
+                to="/"
+                href="#"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${
+                  pathname == "/" && "bg-gray-700"
+                } dark:text-white `}
+              >
+                <ImHome />
+                <span className="ms-3">Home</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/Chat"
+                href="#"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${
+                  pathname == "/Chat" && "bg-gray-700"
+                } dark:text-white `}
+              >
+                <AiFillMessage />
+                <span className="flex-1 ms-3 whitespace-nowrap">Message</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/FriendList"
+                href="#"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${
+                  pathname == "/FriendList" && "bg-gray-700"
+                } dark:text-white `}
+              >
+                <FaUserFriends />
+                <span className="flex-1 ms-3 whitespace-nowrap">Friends</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  3
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/UserList"
+                href="#"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${
+                  pathname == "/UserList" && "bg-gray-700"
+                } dark:text-white `}
+              >
+                <FaUsers />
+                <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/FriendRequest"
+                href="#"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${
+                  pathname == "/FriendRequest" && "bg-gray-700"
+                } dark:text-white `}
+              >
+                <RiUserReceivedFill />
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Friend Request
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/BlockList"
+                href="#"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${
+                  pathname == "/BlockList" && "bg-gray-700"
+                } dark:text-white `}
+              >
+                <MdBlock />
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Block List
+                </span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h1 className="text-2xl text-white mb-2.5 font-medium capitalize">
+            {user?.name}
+          </h1>
+          <div>
             <button
               onClick={handleLogout}
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
+              className="flex items-center gap-1 p-2 text-xl text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
             >
               <IoLogOutOutline />
               <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
             </button>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </aside>
   );
