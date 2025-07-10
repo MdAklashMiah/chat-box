@@ -78,7 +78,7 @@ const FriendList = () => {
               </div>
               <button
                 onClick={() => handleBlock(item)}
-                className="bg-blue-400 px-3 py-1 border rounded"
+                className="bg-[#457B9D] px-3 py-1 border border-[#1D3557] rounded"
               >
                 Block
               </button>
