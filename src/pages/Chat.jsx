@@ -60,14 +60,18 @@ const Chat = () => {
   console.log(massageCollection);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [massageCollection]);
+  if (massageCollection.length > 0) {
+    bottomRef.current?.scrollIntoView({ behavior: "auto" });
+  }
+}, [massageCollection]);
+
+
 
   return (
     <div className="w-full relative grid grid-cols-4 items-center bg-linear-to-t from-[#1D3557] rounded-xl shadow  overflow-hidden">
       <ChatList />
       {user ? (
-        <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen overflow-y-scroll">
+        <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen overflow-hidden flex flex-col">
           <div className="w-full py-5 flex items-center justify-between px-10 bg-[#2d3748] border-b-2 border-[#39455a] sticky top-0 left-0 z-10">
             <div className="flex items-center gap-4">
               {/* <div className="relative">
@@ -88,8 +92,8 @@ const Chat = () => {
               <IoCallOutline />
             </div>
           </div>
-          <div className="p-5 min-h-full bg-linear-to-t from-[#1D3557]">
-            <div className="flex flex-col h-full">
+          <div className="flex flex-col h-[calc(100vh-130px)] bg-linear-to-t from-[#1D3557] overflow-hidden">
+            <div className="flex-1 overflow-y-auto px-5 py-3">
               <div className="grid grid-cols-12 gap-y-2">
                 {massageCollection.map((msgitem) =>
                   msgitem.senderid == auth.currentUser.uid ? (
@@ -158,7 +162,7 @@ const Chat = () => {
               onClick={handleSendMsg}
               className="absolute right-10 cursor-pointer"
             >
-              <LuSendHorizontal className="text-4xl  text-green-700" />
+              <LuSendHorizontal className="text-4xl  text-[#457B9D]" />
             </button>
           </div>
         </div>
