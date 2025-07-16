@@ -9,8 +9,13 @@ import { useSelector } from "react-redux";
 import { getDatabase, onValue, push, ref, set } from "firebase/database";
 import { auth } from "../firebase.config";
 import moment from "moment/moment";
+import { useDispatch } from "react-redux";
+import { chatingUserInfo } from "../slices/ChatSlice";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const Chat = () => {
+  const dispatch = useDispatch();
+  const [showChat, setShowChat] = useState(false);
   const [massageCollection, setmassageCollection] = useState([]);
   const db = getDatabase();
   const [message, setmassage] = useState(null);
@@ -22,10 +27,9 @@ const Chat = () => {
   };
 
   const handleSendMsg = () => {
-     if (!message || message.trim() === "") {
-    
-    return;
-  }
+    if (!message || message.trim() === "") {
+      return;
+    }
     set(push(ref(db, "massagelist/")), {
       sendername: auth.currentUser.displayName,
       senderid: auth.currentUser.uid,
@@ -60,20 +64,63 @@ const Chat = () => {
   console.log(massageCollection);
 
   useEffect(() => {
-  if (massageCollection.length > 0) {
-    bottomRef.current?.scrollIntoView({ behavior: "auto" });
-  }
-}, [massageCollection]);
+    if (massageCollection.length > 0) {
+      bottomRef.current?.scrollIntoView({ behavior: "auto" });
+    }
+  }, [massageCollection]);
 
+  const handleSelectUser = (item) => {
+    if (auth.currentUser.uid == item.senderid) {
+      dispatch(
+        chatingUserInfo({ name: item.recievername, id: item.recieverid })
+      );
+    } else {
+      dispatch(chatingUserInfo({ name: item.sendername, id: item.senderid }));
+    }
+    setShowChat(true);
+  };
 
+  console.log("Redux User:", user);
+  console.log("Show Chat:", showChat);
 
   return (
-    <div className="w-full relative grid grid-cols-4 items-center bg-linear-to-t from-[#1D3557] rounded-xl shadow  overflow-hidden">
-      <ChatList />
-      {user ? (
-        <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen overflow-hidden flex flex-col">
+    <div className="w-full relative grid grid-cols-1 lg:grid-cols-4 bg-[#1D3557] rounded-xl shadow overflow-hidden">
+      <div
+        className={`block lg:col-span-1 w-full ${
+          showChat ? "hidden sm:block" : "block"
+        }`}
+      >
+        <ChatList onSelectUser={handleSelectUser} />
+      </div>
+
+      {!user && (
+        <div className="w-full col-span-3 text-center">
+          <h2 className="text-center text-4xl font-bold text-[#457B9D]">
+            Hi, Welcome Back
+          </h2>
+          <span className="text-[#457B9D] italic">
+            Let's Chat with everyone.
+          </span>
+        </div>
+      )}
+
+      {user && showChat && (
+        <div
+          className={`w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen overflow-hidden flex flex-col
+      ${showChat ? "block" : "hidden sm:block"}
+    `}
+        >
           <div className="w-full py-5 flex items-center justify-between px-10 bg-[#2d3748] border-b-2 border-[#39455a] sticky top-0 left-0 z-10">
             <div className="flex items-center gap-4">
+              <button
+                onClick={() => {
+                  dispatch(chatingUserInfo(null)); // remove user from redux
+                  setShowChat(false);
+                }}
+                className="lg:hidden text-white"
+              >
+               <FaArrowLeft />
+              </button>
               {/* <div className="relative">
               <img
                 src="https://i.pravatar.cc/40?img=1"
@@ -137,7 +184,7 @@ const Chat = () => {
                   )
                 )}
               </div>
-               <div ref={bottomRef} />
+              <div ref={bottomRef} />
             </div>
           </div>
           <div className="w-full py-5 flex items-center px-5 bg-[#2d3748] border-t-2 border-[#39455a] sticky bottom-0 left-0 ">
@@ -165,15 +212,6 @@ const Chat = () => {
               <LuSendHorizontal className="text-4xl  text-[#457B9D]" />
             </button>
           </div>
-        </div>
-      ) : (
-        <div className="w-full col-span-3 text-center">
-          <h2 className="text-center text-4xl font-bold text-[#457B9D]">
-            Hi, Welcome Back
-          </h2>
-          <span className="text-[#457B9D] italic">
-            Let's Chat with everyone.
-          </span>
         </div>
       )}
     </div>

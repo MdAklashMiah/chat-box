@@ -4,31 +4,25 @@ import { Link, useLocation } from "react-router";
 const Navbar = () => {
   const { pathname } = useLocation();
   return (
-    <div className="container absolute z-10 left-1/2 -translate-x-1/2">
+    <div className="container">
       <div className="w-full mx-auto flex justify-between bg-linear-to-r from-[#1D3557] to-[#457B9D] p-5 rounded-2xl">
-        <div className="">
-          <h2 className="text-2xl font-bold text-white">Chat-Box</h2>
-        </div>
-        <ul className="flex gap-5">
+        <ul className="flex gap-2 lg:gap-5">
           <li className="nav-list">
-            <Link to="/UserList" href="#">
-              User
-            </Link>
+            <Link to="/Chat">Chat</Link>
           </li>
           <li className="nav-list">
-            <a href="#">Friends</a>
+            <Link to="/UserList">User</Link>
           </li>
           <li className="nav-list">
-            <a href="#">Friend Request</a>
+            <Link to="/FriendList">Friends</Link>
           </li>
           <li className="nav-list">
-            <a href="#">Group</a>
+            <Link to="/FriendRequest">Friend Request</Link>
           </li>
           <li className="nav-list">
-            <a href="#">Blocklist</a>
+            <Link to="/BlockList">Block List</Link>
           </li>
         </ul>
-        <div className=""><input type="text" placeholder="Search" /></div>
       </div>
     </div>
   );

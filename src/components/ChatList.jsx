@@ -6,7 +6,7 @@ import { chatingUserInfo } from "../slices/ChatSlice";
 import { IoSearchOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 
-const ChatList = () => {
+const ChatList = ({ onSelectUser }) => {
   const user = useSelector((state) => state.chatUser.value);
   const dispatch = useDispatch();
   const [chatList, setChatList] = useState([]);
@@ -38,6 +38,9 @@ const ChatList = () => {
     } else {
       dispatch(chatingUserInfo({ name: item.sendername, id: item.senderid }));
     }
+    if (onSelectUser) {
+      onSelectUser(item);
+    }
   };
 
   const handleSearch = (e) => {
@@ -68,7 +71,7 @@ const ChatList = () => {
           placeholder="Search.."
           className="w-full pl-10 pr-4 py-2 border-1 border-[#39455a] rounded-md bg-[#262e3b] text-sm text-white placeholder-[#39455a] focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <IoSearchOutline className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"/>
+        <IoSearchOutline className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
       </div>
       {/* Message Items */}
       <div className="space-y-1 overflow-auto">

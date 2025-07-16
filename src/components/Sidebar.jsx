@@ -49,9 +49,10 @@ const Sidebar = () => {
   };
 
   return (
+    <div>
     <aside
       id="default-sidebar"
-      className="min-w-xs h-full min-h-screen relative"
+      className="min-w-xs h-full min-h-screen relative md:hidden lg:block"
       aria-label="Sidebar"
     >
       <div className="min-w-xs h-full flex flex-col justify-between px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-linear-to-t from-[#1D3557] border-r-4 border-[#F1FAEE]">
@@ -154,6 +155,8 @@ const Sidebar = () => {
         </div>
       </div>
     </aside>
+
+    </div>
   );
 };
 
