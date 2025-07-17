@@ -14,7 +14,7 @@ const RootLayout = () => {
       <Outlet />
 
       {!user &&(
-      <div className="block lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2">
+      <div className="w-full block lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2">
         <Navbar />
       </div>
       )}
