@@ -97,8 +97,8 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-linear-to-t from-[#1D3557] to-[#2d3748] min-h-screen flex box-border justify-center items-center">
-      <div className="max-w-lg w-full mx-auto bg-[#2d3748] border border-slate-300 rounded-2xl p-8">
+    <section className="bg-[#1D3557] min-h-screen flex box-border justify-center items-center">
+      <div className="max-w-lg w-full mx-auto bg-[#457B9D] border border-slate-300 rounded-2xl p-8">
         <Toaster />
         <div className=" ">
           <h2 className="font-bold text-3xl text-[#F1FAEE]">Login</h2>
@@ -112,7 +112,7 @@ const Login = () => {
                 value={loginInfo.email}
                 name="email"
                 type="email"
-                className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
+                className="p-3 rounded-xl text-black border border-[#1D3557] bg-[#ffffff] placeholder-[#1D3557] w-full"
                 placeholder="Email"
               />
             </div>
@@ -124,7 +124,7 @@ const Login = () => {
                 <input
                   onChange={handlePassword}
                   value={loginInfo.password}
-                  className="p-3 rounded-xl text-white border border-[#39455a] w-full placeholder-gray-500"
+                  className="p-3 rounded-xl text-black border border-[#1D3557] bg-[#ffffff] w-full placeholder-[#1D3557]"
                   type={passVisibility ? "text" : "password"}
                   name="password"
                   id="password"
@@ -158,22 +158,22 @@ const Login = () => {
               </div>
             </div>
             <button
-              className="bg-[#206ab1] text-white py-3 rounded-xl hover:scale-105 duration-300 hover:bg-[#457B9D] font-medium"
+              className="bg-[#1D3557] border text-white py-3 rounded-xl duration-300 hover:bg-[#ffffff] hover:text-[#1D3557] font-medium"
               type="submit"
             >
               Login
             </button>
           </form>
           <div className="mt-6  items-center text-gray-100">
-            <hr className="border-[#206ab1]" />
-            <p className="text-[#206ab1] text-center font-semibold text-sm my-1">
+            <hr className="border-[#1D3557]" />
+            <p className="text-[#1D3557] text-center font-semibold text-sm my-1">
               OR
             </p>
-            <hr className="border-[#206ab1]" />
+            <hr className="border-[#1D3557]" />
           </div>
           <button
             onClick={handleLoginWithGoogle}
-            className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium cursor-pointer"
+            className="bg-white border py-3 w-full rounded-xl mt-5 flex justify-center items-center text-sm  duration-300 hover:bg-[#1D3557] hover:text-white font-medium cursor-pointer"
           >
             <svg
               className="mr-3"
@@ -200,14 +200,14 @@ const Login = () => {
             </svg>
             Login with Google
           </button>
-          <div className="mt-10 text-sm text-[#F1FAEE] border-b border-gray-500 py-5 playfair tooltip">
+          <div className="mt-10 text-sm text-[#F1FAEE] border-b border-[#1D3557] py-5 playfair tooltip">
             Forget password?
           </div>
           <div className="mt-4 text-sm text-[#F1FAEE]  flex justify-between items-center container-mr">
             <p className="mr-3 md:mr-0 ">If you don't have an account..</p>
             <Link
               to={"/signup"}
-              className="hover:border register text-white bg-[#206ab1] hover:border-gray-400 rounded-xl py-3 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300"
+              className=" register text-white bg-[#1D3557] border rounded-xl py-3 px-5  hover:bg-[#ffffff] hover:text-[#1D3557] font-semibold duration-300"
             >
               Register
             </Link>

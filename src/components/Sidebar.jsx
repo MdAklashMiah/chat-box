@@ -55,12 +55,12 @@ const Sidebar = () => {
       className="min-w-xs h-full min-h-screen relative md:hidden lg:block"
       aria-label="Sidebar"
     >
-      <div className="min-w-xs h-full flex flex-col justify-between px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-linear-to-t from-[#1D3557] border-r-4 border-[#F1FAEE]">
+      <div className="min-w-xs h-full flex flex-col justify-between px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-[#1D3557] border-r-4 border-[#F1FAEE]">
         <div>
           <div className="logo py-4">
-            <a href="#" className="text-3xl font-bold text-[#457B9D]">Chat-Box</a>
+            <a href="#" className="text-3xl font-bold text-[#ffffff] bg-[#457B9D] p-2 rounded ">Chat-Box</a>
           </div>
-          <ul className="space-y-2 font-medium">
+          <ul className="space-y-2 font-medium mt-5">
             <li>
               <Link
                 to="/"

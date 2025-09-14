@@ -115,9 +115,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-linear-to-t from-[#1D3557] to-[#2d3748] sm:h-screen p-4">
+    <div className="flex flex-col justify-center bg-[#1D3557] sm:h-screen p-4">
       <Toaster />
-      <div className="max-w-lg w-full mx-auto bg-[#2d3748] border border-slate-300 rounded-2xl p-8">
+      <div className="max-w-lg w-full mx-auto bg-[#457B9D] border border-slate-300 rounded-2xl p-8">
         <div className="text-center mb-12">
           <h2 className="font-bold text-3xl text-[#F1FAEE]">
             Create Your Account
@@ -134,7 +134,7 @@ const Signup = () => {
                 onChange={handleUsername}
                 name="User"
                 type="text"
-                className="p-3 rounded-xl text-white border border-[#39455a] w-full placeholder-gray-500"
+                className="p-3 rounded-xl bg-[#ffffff] text-black border border-[#1D3557] w-full placeholder-[#1D3557]"
                 placeholder="Enter Your User Name"
               />
             </div>
@@ -147,7 +147,7 @@ const Signup = () => {
                 onChange={handleEmail}
                 name="email"
                 type="email"
-                className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
+                className="p-3 rounded-xl bg-[#ffffff] text-black border border-[#1D3557] w-full placeholder-[#1D3557]"
                 placeholder="Enter email"
               />
             </div>
@@ -161,7 +161,7 @@ const Signup = () => {
                   onChange={handlePassword}
                   name="password"
                   type={passVisibility ? "text" : "password"}
-                  className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
+                  className="p-3 rounded-xl bg-[#ffffff] text-black border border-[#1D3557] w-full placeholder-[#1D3557]"
                   placeholder="Enter password"
                 />
 
@@ -191,22 +191,9 @@ const Signup = () => {
                   onChange={handleConfirmPassword}
                   name="cpassword"
                   type={passVisibility ? "text" : "password"}
-                  className="p-3 rounded-xl text-white border border-[#39455a] placeholder-gray-500 w-full"
+                  className="p-3 rounded-xl bg-[#ffffff] text-black border border-[#1D3557] w-full placeholder-[#1D3557]"
                   placeholder="Enter confirm password"
                 />
-                <svg
-                  onClick={handleShowPassword}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={16}
-                  fill="#39455a"
-                  id="togglePassword"
-                  className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
-                </svg>
               </div>
             </div>
             <div className="flex items-center">
@@ -218,12 +205,12 @@ const Signup = () => {
               />
               <label
                 htmlFor="remember-me"
-                className="text-gray-500 ml-3 block text-sm"
+                className="text-white ml-3 block text-sm"
               >
                 I accept the{" "}
                 <a
                   href="javascript:void(0);"
-                  className="text-[#206ab1] font-medium hover:underline ml-1"
+                  className="text-[#1D3557] font-medium hover:underline ml-1"
                 >
                   Terms and Conditions
                 </a>
@@ -233,16 +220,16 @@ const Signup = () => {
           <div className="mt-4">
             <button
               type="submit"
-              className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-[#206ab1] hover:bg-[#457B9D] focus:outline-none cursor-pointer"
+              className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-[#1D3557] border  hover:bg-[#ffffff] hover:text-[#1D3557] focus:outline-none cursor-pointer"
             >
               Sign Up
             </button>
           </div>
-          <p className="text-gray-500 text-sm font-medium mt-6 text-center flex justify-between items-center">
+          <p className="text-[#1D3557] text-sm font-medium mt-6 text-center flex justify-between items-center">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="hover:border register text-white bg-[#206ab1] hover:border-gray-400 rounded-xl py-3 px-5 hover:scale-110 hover:bg-[#457B9D] font-semibold duration-300"
+              className="register text-white bg-[#1D3557] border rounded-xl py-3 px-5 hover:bg-[#ffffff] hover:text-[#1D3557] font-semibold duration-300"
             >
               Login here
             </Link>

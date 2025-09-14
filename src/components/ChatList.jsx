@@ -58,7 +58,7 @@ const ChatList = ({ onSelectUser }) => {
   console.log(searchUser);
 
   return (
-    <div className="w-full bg-[#2d3748] col-span-1 p-5 overflow-auto h-screen border-r-2 border-[#39455a]">
+    <div className="w-full bg-linear-to-b from-[#457B9D] col-span-1 p-5 overflow-auto h-screen border-r-2 border-[#39455a]">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-[#457B9D]">Chats</h2>
         <button className="text-gray-400 hover:text-gray-600">•••</button>
@@ -69,7 +69,7 @@ const ChatList = ({ onSelectUser }) => {
           onChange={handleSearch}
           type="text"
           placeholder="Search.."
-          className="w-full pl-10 pr-4 py-2 border-1 border-[#39455a] rounded-md bg-[#262e3b] text-sm text-white placeholder-[#39455a] focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full pl-10 pr-4 py-2 border-1 border-[#39455a] rounded-md bg-[#ffffff] text-sm text-white placeholder-[#39455a] focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <IoSearchOutline className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
       </div>
@@ -117,12 +117,12 @@ const ChatList = ({ onSelectUser }) => {
                 onClick={() => handleSelectUser(item)}
                 className={`flex items-center justify-between p-4 rounded-md border-1 border-[#39455a] ${
                   user?.id == item.senderid || user?.id == item.recieverid
-                    ? "bg-linear-to-r from-[#1D3557]"
-                    : "bg-[#262e3b]"
+                    ? "bg-[#457B9D]"
+                    : "bg-[#1D3557]"
                 }`}
               >
                 <div className="flex items-center space-x-3 ">
-                  <CgProfile className="text-4xl text-[#457B9D]" />
+                  <CgProfile className="text-4xl text-[#ffffff]" />
                   <div>
                     {auth.currentUser.uid == item.senderid ? (
                       <h4 className="font-semibold text-white text-sm">
@@ -133,14 +133,14 @@ const ChatList = ({ onSelectUser }) => {
                         {item.sendername}
                       </h4>
                     )}
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-white">
                       Hello devid, how are you today?
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-gray-400">Dec, 8</p>
-                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium ml-auto block w-fit">
+                  <p className="text-xs text-white">Dec, 8</p>
+                  <span className="bg-blue-500 text-white text-xs mt-2 px-2 py-0.5 rounded-full font-medium ml-auto block w-fit">
                     5
                   </span>
                 </div>

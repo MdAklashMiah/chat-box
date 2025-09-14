@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const RootLayout = () => {
   const user = useSelector((state) => state.chatUser.value);
   return (
-    <main className="flex relative bg-[#262e3b] h-screen">
+    <main className="flex relative bg-[#457B9D] h-screen">
       <div className="hidden lg:block">
         <Sidebar />
       </div>
