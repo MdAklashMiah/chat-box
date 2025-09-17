@@ -1,16 +1,15 @@
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdBlock } from "react-icons/md";
 import { ImHome } from "react-icons/im";
 import { AiFillMessage } from "react-icons/ai";
-import { FaUserFriends } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa6";
+import { FaUserFriends, FaUsers } from "react-icons/fa";
 import { RiUserReceivedFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLoginInfo } from "../slices/UserSlice";
-import { Link, Links, useLocation, useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -18,11 +17,11 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const auth = getAuth();
   const user = useSelector((state) => state.userLogin.value);
-  console.log(pathname);
+
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         dispatch(
           userLoginInfo({
@@ -36,7 +35,7 @@ const Sidebar = () => {
         navigate("/login");
       }
     });
-  }, [dispatch]);
+  }, [dispatch, auth, navigate]);
 
   const handleLogout = () => {
     signOut(auth)
@@ -44,119 +43,87 @@ const Sidebar = () => {
         navigate("/login");
       })
       .catch((error) => {
-        // An error happened.
+        console.error(error);
       });
   };
 
+  // ✅ Menu Items
+  const menuItems = [
+    { to: "/", icon: <ImHome />, label: "Home" },
+    { to: "/Chat", icon: <AiFillMessage />, label: "Message" },
+    { to: "/FriendList", icon: <FaUserFriends />, label: "Friends" },
+    { to: "/UserList", icon: <FaUsers />, label: "Users" },
+    { to: "/FriendRequest", icon: <RiUserReceivedFill />, label: "Friend Request" },
+    { to: "/BlockList", icon: <MdBlock />, label: "Block List" },
+  ];
+
   return (
-    <div>
-    <aside
-      id="default-sidebar"
-      className="min-w-xs h-full min-h-screen relative md:hidden lg:block"
-      aria-label="Sidebar"
-    >
-      <div className="min-w-xs h-full flex flex-col justify-between px-3 py-4 overflow-y-auto fixed top-0 left-0 bg-[#1D3557] border-r-4 border-[#F1FAEE]">
-        <div>
-          <div className="logo py-4">
-            <a href="#" className="text-3xl font-bold text-[#ffffff] bg-[#457B9D] p-2 rounded ">Chat-Box</a>
+    <>
+      {/* 🔹 Top Navbar (Mobile) */}
+      <div className="md:hidden flex items-center justify-between bg-[#1D3557] text-white p-4 sticky top-0 z-40">
+        <span className="text-lg sm:text-xl font-bold">Chat-Box</span>
+        <button onClick={() => setOpen(!open)}>
+          <GiHamburgerMenu size={24} />
+        </button>
+      </div>
+
+      {/* 🔹 Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 h-screen w-60 sm:w-64 bg-[#1D3557] border-r-4 border-[#F1FAEE] transform transition-transform duration-300 z-50 
+        ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static`}
+      >
+        <div className="h-full flex flex-col justify-between px-3 py-4 overflow-y-auto">
+          {/* Logo */}
+          <div className="hidden md:block py-4 text-center">
+            <span className="text-2xl sm:text-3xl font-bold text-white bg-[#457B9D] px-2 py-1 rounded">
+              Chat-Box
+            </span>
           </div>
+
+          {/* Menu */}
           <ul className="space-y-2 font-medium mt-5">
-            <li>
-              <Link
-                to="/"
-                href="#"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${
-                  pathname == "/" && "bg-gray-700"
-                } dark:text-white `}
-              >
-                <ImHome />
-                <span className="ms-3">Home</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Chat"
-                href="#"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${
-                  pathname == "/Chat" && "bg-gray-700"
-                } dark:text-white `}
-              >
-                <AiFillMessage />
-                <span className="flex-1 ms-3 whitespace-nowrap">Message</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/FriendList"
-                href="#"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${
-                  pathname == "/FriendList" && "bg-gray-700"
-                } dark:text-white `}
-              >
-                <FaUserFriends />
-                <span className="flex-1 ms-3 whitespace-nowrap">Friends</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/UserList"
-                href="#"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${
-                  pathname == "/UserList" && "bg-gray-700"
-                } dark:text-white `}
-              >
-                <FaUsers />
-                <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/FriendRequest"
-                href="#"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${
-                  pathname == "/FriendRequest" && "bg-gray-700"
-                } dark:text-white `}
-              >
-                <RiUserReceivedFill />
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Friend Request
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/BlockList"
-                href="#"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${
-                  pathname == "/BlockList" && "bg-gray-700"
-                } dark:text-white `}
-              >
-                <MdBlock />
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Block List
-                </span>
-              </Link>
-            </li>
+            {menuItems.map((item, i) => (
+              <li key={i}>
+                <Link
+                  to={item.to}
+                  className={`flex items-center p-2 rounded-lg ${
+                    pathname === item.to
+                      ? "bg-gray-700 text-white"
+                      : "text-gray-200"
+                  } hover:bg-gray-600 transition`}
+                  onClick={() => setOpen(false)} 
+                >
+                  <span className="text-lg">{item.icon}</span>
+                  <span className="ml-3 text-sm sm:text-base">{item.label}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
-        </div>
-        <div>
-          <h1 className="text-2xl text-white mb-2.5 font-medium capitalize">
-            {user?.name}
-          </h1>
-          <div>
+
+          {/* User + Logout */}
+          <div className="mt-5 border-t border-gray-600 pt-4">
+            <h1 className="text-sm sm:text-lg text-white mb-3 font-medium capitalize">
+              {user?.name}
+            </h1>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1 p-2 text-xl text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
+              className="flex items-center gap-2 p-2 text-white rounded-lg hover:bg-gray-600 cursor-pointer w-full text-sm sm:text-base"
             >
               <IoLogOutOutline />
-              <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
+              <span>Log Out</span>
             </button>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
 
-    </div>
+      {/* 🔹 Overlay (Mobile) */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-40"
+          onClick={() => setOpen(false)}
+        ></div>
+      )}
+    </>
   );
 };
 

@@ -84,137 +84,101 @@ const Chat = () => {
   console.log("Show Chat:", showChat);
 
   return (
-    <div className="w-full relative grid grid-cols-1 lg:grid-cols-4 bg-linear-to-b from-[#457B9D] to-[#1D3557] rounded-xl shadow overflow-hidden">
-      <div
-        className={`block lg:col-span-1 w-full ${
-          showChat ? "hidden sm:block" : "block"
-        }`}
-      >
-        <ChatList onSelectUser={handleSelectUser} />
+    <div className="w-full relative grid grid-cols-1 lg:grid-cols-4 bg-gradient-to-b from-[#457B9D] to-[#1D3557] rounded-xl shadow overflow-hidden">
+  {/* Sidebar */}
+  <div className={`${showChat ? "hidden lg:block" : "block"} w-full`}>
+    <ChatList onSelectUser={handleSelectUser} />
+  </div>
+
+  {/* Empty State */}
+  {!user && (
+    <div className="w-full flex flex-col items-center justify-center col-span-3 text-center p-5">
+      <h2 className="text-2xl sm:text-4xl font-bold text-white">Hi, Welcome Back</h2>
+      <span className="text-white italic text-sm sm:text-base">Let's Chat with everyone.</span>
+    </div>
+  )}
+
+  {/* Chat Window */}
+  {user && showChat && (
+    <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen flex flex-col">
+      {/* Header */}
+      <div className="w-full py-3 sm:py-5 flex items-center justify-between px-5 sm:px-10 bg-[#457B9D] border-b border-[#39455a] sticky top-0 z-10">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <button
+            onClick={() => {
+              dispatch(chatingUserInfo(null));
+              setShowChat(false);
+            }}
+            className="lg:hidden text-white text-xl"
+          >
+            <FaArrowLeft />
+          </button>
+          <h4 className="text-white font-semibold text-base sm:text-xl">{user?.name}</h4>
+        </div>
+        <div className="flex gap-3 sm:gap-5 text-xl sm:text-2xl text-white">
+          <HiOutlineVideoCamera />
+          <IoCallOutline />
+        </div>
       </div>
 
-      {!user && (
-        <div className="w-full flex flex-col items-center justify-center col-span-3 text-center">
-          <h2 className="text-center text-4xl font-bold text-[#ffffff]">
-            Hi, Welcome Back
-          </h2>
-          <span className="text-[#ffffff] italic">
-            Let's Chat with everyone.
-          </span>
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto px-3 sm:px-5 py-3 bg-[#1D3557]">
+        <div className="grid grid-cols-12 gap-y-2">
+          {massageCollection.map((msgitem) =>
+            msgitem.senderid == auth.currentUser.uid ? (
+              <div className="col-start-6 col-end-13 p-2 sm:p-3">
+                <div className="flex flex-row-reverse items-start gap-2 sm:gap-3">
+                  <CgProfile className="text-2xl sm:text-3xl text-white" />
+                  <div className="bg-[#457B9D] p-2 sm:p-3 rounded-xl shadow max-w-[75%] sm:max-w-[60%] break-words">
+                    <h2 className="text-sm sm:text-base font-medium text-[#F1FAEE]">
+                      {msgitem.msg}
+                    </h2>
+                    <p className="text-xs text-gray-200">{moment(msgitem.date, "YYYYMMDD, h:mm:ss").fromNow()}</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="col-start-1 col-end-8 p-2 sm:p-3">
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <CgProfile className="text-2xl sm:text-3xl text-white" />
+                  <div className="bg-[#457B9D] p-2 sm:p-3 rounded-xl shadow max-w-[75%] sm:max-w-[60%] break-words">
+                    <h2 className="text-sm sm:text-base font-medium text-[#F1FAEE]">
+                      {msgitem.msg}
+                    </h2>
+                    <p className="text-xs text-gray-200">{moment(msgitem.date, "YYYYMMDD, h:mm:ss").fromNow()}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
         </div>
-      )}
+        <div ref={bottomRef} />
+      </div>
 
-      {user && showChat && (
-        <div
-          className={`w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen overflow-hidden flex flex-col
-      ${showChat ? "block" : "hidden sm:block"}
-    `}
-        >
-          <div className="w-full py-5 flex items-center justify-between px-10 bg-[#457B9D] border-b-2 border-[#39455a] sticky top-0 left-0 z-10">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => {
-                  dispatch(chatingUserInfo(null)); // remove user from redux
-                  setShowChat(false);
-                }}
-                className="lg:hidden text-white"
-              >
-                <FaArrowLeft />
-              </button>
-              {/* <div className="relative">
-              <img
-                src="https://i.pravatar.cc/40?img=1"
-                className="w-10 h-10 rounded-full"
-              />
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
-            </div> */}
-              <div>
-                <h4 className="text-[#457B9D] font-semibold text-xl">
-                  {user?.name}
-                </h4>
-              </div>
-            </div>
-            <div className="flex gap-5 text-2xl bg-[#457B9D] p-2 rounded-sm">
-              <HiOutlineVideoCamera />
-              <IoCallOutline />
-            </div>
-          </div>
-          <div className="flex flex-col h-[calc(100vh-130px)] bg-[#1D3557] overflow-hidden">
-            <div className="flex-1 overflow-y-auto px-5 py-3">
-              <div className="grid grid-cols-12 gap-y-2">
-                {massageCollection.map((msgitem) =>
-                  msgitem.senderid == auth.currentUser.uid ? (
-                    <div className="col-start-6 col-end-13  p-3 rounded-lg">
-                      <div className="flex items-center justify-start  flex-row-reverse">
-                        <div className="text-4xl">
-                          <CgProfile className="text-[#ffffff]" />
-                        </div>
-                        <div className="relative mr-3 text-sm bg-[#457B9D] py-2 px-4 shadow rounded-xl break-words max-w-[90%]">
-                          <h2 className=" text-[16px] font-medium text-[#F1FAEE]">
-                            {msgitem.msg}
-                          </h2>
-                          <p className="text-[#F1FAEE]">
-                            {moment(
-                              msgitem.date,
-                              "YYYYMMDD , h:mm:ss"
-                            ).fromNow()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="col-start-1 col-end-8  p-3 rounded-lg">
-                      <div className="flex flex-row items-center">
-                        <div className="text-4xl">
-                          <CgProfile className="text-[#ffffff]" />
-                        </div>
-                        <div className="relative ml-3 text-sm bg-[#457B9D]  py-2 px-4 shadow rounded-xl break-words max-w-[90%]">
-                          <h2 className="text-[16px] font-medium text-[#F1FAEE]">
-                            {msgitem.msg}
-                          </h2>
-                          <p className="text-[#F1FAEE]">
-                            {moment(
-                              msgitem.date,
-                              "YYYYMMDD , h:mm:ss"
-                            ).fromNow()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-              <div ref={bottomRef} />
-            </div>
-          </div>
-          <div className="w-full py-5 flex items-center px-5 bg-[#457B9D] border-t-2 border-[#39455a] sticky bottom-0 left-0 ">
-            <label htmlFor="file-upload" className="absolute left-10 text-4xl">
-              <MdAttachment />
-            </label>
-            {/* <input type="file" id="file-upload" className="hidden" /> */}
-            <input
-              onChange={handlemassage}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSendMsg();
-                }
-              }}
-              type="text"
-              value={message}
-              placeholder="Enter Your Text"
-              className="bg-[#ffffff] text-black py-4 px-20 w-full h-full rounded-lg border-1 border-[#39455a]"
-            />
-            <button
-              onClick={handleSendMsg}
-              className="absolute right-10 cursor-pointer"
-            >
-              <LuSendHorizontal className="text-4xl  text-[#457B9D]" />
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Input */}
+      <div className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-3 bg-[#457B9D] border-t border-[#39455a]">
+        <MdAttachment className="text-2xl sm:text-3xl text-white cursor-pointer" />
+        <input
+          onChange={handlemassage}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMsg();
+            }
+          }}
+          type="text"
+          value={message}
+          placeholder="Enter your text..."
+          className="flex-1 py-2 sm:py-3 px-3 sm:px-5 rounded-lg border border-[#39455a] bg-white text-black text-sm sm:text-base"
+        />
+        <button onClick={handleSendMsg}>
+          <LuSendHorizontal className="text-2xl sm:text-3xl text-white" />
+        </button>
+      </div>
     </div>
+  )}
+</div>
+
   );
 };
 

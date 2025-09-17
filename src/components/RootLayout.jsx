@@ -12,7 +12,6 @@ const RootLayout = () => {
         <Sidebar />
       </div>
       <Outlet />
-
       {!user &&(
       <div className="w-full block lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2">
         <Navbar />
