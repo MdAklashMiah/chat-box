@@ -51,7 +51,7 @@ const BlockList = () => {
 
   return (
     <>
-      <div className="relative w-full rounded-lg bg-linear-to-t from-[#1D3557] shadow-sm">
+      <div className="relative w-full max-h-screen rounded-lg bg-linear-to-t from-[#1D3557] shadow-sm">
         <h1 className="text-2xl text-center text-[#F1FAEE] font-bold bg-[#1D3557] border-b-2 border-[#39455a] p-5">Block List</h1>
         <ul className="max-w-2xl text-center mx-auto flex flex-col gap-1 mt-1">
           {blockList.map((item) => (
