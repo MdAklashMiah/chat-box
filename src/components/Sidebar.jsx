@@ -126,7 +126,7 @@ const Sidebar = () => {
             </h1>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 p-2 text-white rounded-lg hover:bg-gray-600 cursor-pointer w-full text-sm sm:text-base"
+              className="flex items-center gap-2 p-2 text-white rounded-lg hover:bg-[#457B9D]  cursor-pointer w-full text-sm sm:text-base"
             >
               <IoLogOutOutline />
               <span>Log Out</span>
