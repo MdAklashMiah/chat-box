@@ -100,7 +100,7 @@ const Chat = () => {
 
   {/* Chat Window */}
   {user && showChat && (
-    <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg h-screen flex flex-col">
+    <div className="w-full col-span-3 bg-[#262e3b] relative rounded-lg min-h-dvh flex flex-col">
       {/* Header */}
       <div className="w-full py-3 sm:py-5 flex items-center justify-between px-5 sm:px-10 bg-[#457B9D] border-b border-[#39455a] sticky top-0 z-10">
         <div className="flex items-center gap-3 sm:gap-4">
