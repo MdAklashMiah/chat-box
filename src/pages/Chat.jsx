@@ -84,7 +84,7 @@ const Chat = () => {
   console.log("Show Chat:", showChat);
 
   return (
-    <div className="w-full relative grid grid-cols-1 lg:grid-cols-4 bg-gradient-to-b from-[#457B9D] to-[#1D3557] rounded-xl shadow overflow-hidden">
+    <div className="w-full max-h-screen relative grid grid-cols-1 lg:grid-cols-4 bg-gradient-to-b from-[#457B9D] to-[#1D3557] rounded-xl shadow overflow-hidden">
   {/* Sidebar */}
   <div className={`${showChat ? "hidden lg:block" : "block"} w-full`}>
     <ChatList onSelectUser={handleSelectUser} />
