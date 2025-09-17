@@ -57,10 +57,10 @@ const FriendList = () => {
   return (
     <>
       <div className="relative w-full rounded-lg bg-linear-to-t from-[#1D3557] shadow-sm">
-        <h2 className="text-2xl text-center text-[#F1FAEE] font-bold bg-[#2d3748] border-b-2 border-[#39455a] p-5">Friends List</h2>
+        <h2 className="text-2xl text-center text-[#F1FAEE] font-bold bg-[#1D3557] border-b-2 border-[#39455a] p-5">Friends List</h2>
         <ul className="max-w-2xl text-center mx-auto flex flex-col gap-1 mt-1">
           {friendReqList.map((item) => (
-            <li className="text-white flex w-full items-center bg-gray-700 justify-between rounded-md p-3 transition-all">
+            <li className="text-white flex w-full items-center bg-[#1D3557] justify-between rounded-md p-3 transition-all">
               <div className="mr-4 grid place-items-center">
                 <img
                   alt="candice"

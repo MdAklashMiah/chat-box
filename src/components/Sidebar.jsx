@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLoginInfo } from "../slices/UserSlice";
 import { Link, useLocation, useNavigate } from "react-router";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineMessage } from "react-icons/ai";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -53,7 +54,11 @@ const Sidebar = () => {
     { to: "/Chat", icon: <AiFillMessage />, label: "Message" },
     { to: "/FriendList", icon: <FaUserFriends />, label: "Friends" },
     { to: "/UserList", icon: <FaUsers />, label: "Users" },
-    { to: "/FriendRequest", icon: <RiUserReceivedFill />, label: "Friend Request" },
+    {
+      to: "/FriendRequest",
+      icon: <RiUserReceivedFill />,
+      label: "Friend Request",
+    },
     { to: "/BlockList", icon: <MdBlock />, label: "Block List" },
   ];
 
@@ -61,7 +66,12 @@ const Sidebar = () => {
     <>
       {/* 🔹 Top Navbar (Mobile) */}
       <div className="md:hidden flex items-center justify-between bg-[#1D3557] text-white p-4 sticky top-0 z-40">
-        <span className="text-lg sm:text-xl font-bold">Chat-Box</span>
+        <div className="flex items-center">
+          <span className="text-lg sm:text-xl font-bold">
+            <AiOutlineMessage />
+          </span>
+          <span className="text-lg sm:text-xl font-bold">Chatbuzzz</span>
+        </div>
         <button onClick={() => setOpen(!open)}>
           <GiHamburgerMenu size={24} />
         </button>
@@ -70,35 +80,44 @@ const Sidebar = () => {
       {/* 🔹 Sidebar */}
       <aside
         className={`fixed top-0 left-0 h-screen w-60 sm:w-64 bg-[#1D3557] border-r-4 border-[#F1FAEE] transform transition-transform duration-300 z-50 
-        ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static`}
+        ${
+          open ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 md:static`}
       >
         <div className="h-full flex flex-col justify-between px-3 py-4 overflow-y-auto">
-          {/* Logo */}
-          <div className="hidden md:block py-4 text-center">
-            <span className="text-2xl sm:text-3xl font-bold text-white bg-[#457B9D] px-2 py-1 rounded">
-              Chat-Box
-            </span>
-          </div>
+          <div>
+            {/* Logo */}
+            <div className="hidden md:flex items-center text-center">
+              <span className="text-2xl sm:text-3xl font-bold text-white">
+                <AiOutlineMessage />
+              </span>
+              <span className="text-2xl sm:text-3xl font-bold text-white rounded">
+                Chatbuzzz
+              </span>
+            </div>
 
-          {/* Menu */}
-          <ul className="space-y-2 font-medium mt-5">
-            {menuItems.map((item, i) => (
-              <li key={i}>
-                <Link
-                  to={item.to}
-                  className={`flex items-center p-2 rounded-lg ${
-                    pathname === item.to
-                      ? "bg-gray-700 text-white"
-                      : "text-gray-200"
-                  } hover:bg-gray-600 transition`}
-                  onClick={() => setOpen(false)} 
-                >
-                  <span className="text-lg">{item.icon}</span>
-                  <span className="ml-3 text-sm sm:text-base">{item.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+            {/* Menu */}
+            <ul className="space-y-2 font-medium mt-5">
+              {menuItems.map((item, i) => (
+                <li key={i}>
+                  <Link
+                    to={item.to}
+                    className={`flex items-center p-2 rounded-lg ${
+                      pathname === item.to
+                        ? "bg-[#457B9D] text-white"
+                        : "text-gray-200"
+                    } hover:bg-[#457B9D] transition`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    <span className="ml-3 text-sm sm:text-base">
+                      {item.label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* User + Logout */}
           <div className="mt-5 border-t border-gray-600 pt-4">
