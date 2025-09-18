@@ -119,7 +119,7 @@ const ChatList = ({ onSelectUser }) => {
   return (
     <div className="w-full max-h-screen bg-linear-to-b from-[#457B9D] col-span-1 p-3 sm:p-5 overflow-auto h-full sm:h-screen border-r-2 border-[#39455a]">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg sm:text-2xl font-bold text-[#457B9D]">Chats</h2>
+        <h2 className="text-lg sm:text-2xl font-bold text-[#ffffff]">Chats</h2>
         <button className="text-gray-400 hover:text-gray-600">•••</button>
       </div>
 
