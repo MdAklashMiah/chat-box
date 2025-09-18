@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { chatingUserInfo } from "../slices/ChatSlice";
 import { IoSearchOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import moment from "moment";
 
 const ChatList = ({ onSelectUser }) => {
   const user = useSelector((state) => state.chatUser.value);
@@ -14,24 +15,71 @@ const ChatList = ({ onSelectUser }) => {
   const db = getDatabase();
   const auth = getAuth();
 
-  // Fetch chat list from Firebase
   useEffect(() => {
-    const friendReqListRef = ref(db, "friendslist/");
-    onValue(friendReqListRef, (snapshot) => {
-      const array = [];
+    const friendRef = ref(db, "friendslist/");
+    const msgRef = ref(db, "massagelist/");
+
+    // Friend list + messages live sync
+    onValue(friendRef, (snapshot) => {
+      const friends = [];
       snapshot.forEach((item) => {
         if (
           auth.currentUser.uid === item.val().senderid ||
           auth.currentUser.uid === item.val().recieverid
         ) {
-          array.push({ ...item.val(), id: item.key });
+          friends.push({ ...item.val(), id: item.key });
         }
       });
-      setChatList(array);
+
+      // এখন message listener বসাবো
+      onValue(msgRef, (msgSnap) => {
+        const updatedList = friends.map((friend) => {
+          let lastMsg = null;
+          let unreadCount = 0;
+
+          msgSnap.forEach((msgItem) => {
+            const data = msgItem.val();
+            const friendId =
+              auth.currentUser.uid === friend.senderid
+                ? friend.recieverid
+                : friend.senderid;
+
+            if (
+              (data.senderid === auth.currentUser.uid &&
+                data.recieverid === friendId) ||
+              (data.recieverid === auth.currentUser.uid &&
+                data.senderid === friendId)
+            ) {
+              // সর্বশেষ মেসেজ সেট করা
+              if (!lastMsg || data.date > lastMsg.date) {
+                lastMsg = { ...data, id: msgItem.key };
+              }
+
+              // unread count
+              if (
+                data.recieverid === auth.currentUser.uid &&
+                data.status === "unread"
+              ) {
+                unreadCount++;
+              }
+            }
+          });
+
+          return { ...friend, lastMsg, unreadCount };
+        });
+
+        // last message এর date অনুযায়ী sort করা
+        updatedList.sort((a, b) => {
+          if (!a.lastMsg) return 1;
+          if (!b.lastMsg) return -1;
+          return moment(b.lastMsg.date).diff(moment(a.lastMsg.date));
+        });
+
+        setChatList(updatedList);
+      });
     });
   }, []);
 
-  // Handle selecting a chat
   const handleSelectUser = (item) => {
     if (auth.currentUser.uid === item.senderid) {
       dispatch(
@@ -43,12 +91,8 @@ const ChatList = ({ onSelectUser }) => {
     if (onSelectUser) onSelectUser(item);
   };
 
-  // Update search query
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  const handleSearch = (e) => setSearchQuery(e.target.value);
 
-  // Filter chat list based on search
   const filteredChatList = chatList.filter((item) => {
     const senderName = item.sendername.toLowerCase().replace(/\s/g, "");
     const receiverName = item.recievername.toLowerCase().replace(/\s/g, "");
@@ -56,10 +100,8 @@ const ChatList = ({ onSelectUser }) => {
     return senderName.includes(query) || receiverName.includes(query);
   });
 
-  // Highlight matched text
   const highlightMatch = (text, query) => {
     if (!query) return text;
-
     const regex = new RegExp(`(${query})`, "gi");
     const parts = text.split(regex);
 
@@ -81,7 +123,7 @@ const ChatList = ({ onSelectUser }) => {
         <button className="text-gray-400 hover:text-gray-600">•••</button>
       </div>
 
-      {/* Search Bar */}
+      {/* Search */}
       <div className="relative mb-5">
         <input
           onChange={handleSearch}
@@ -93,7 +135,7 @@ const ChatList = ({ onSelectUser }) => {
         <IoSearchOutline className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
       </div>
 
-      {/* Message Items */}
+      {/* Chat list */}
       <div className="space-y-2 overflow-auto">
         {filteredChatList.length > 0 ? (
           filteredChatList.map((item) => (
@@ -115,15 +157,21 @@ const ChatList = ({ onSelectUser }) => {
                       : highlightMatch(item.sendername, searchQuery)}
                   </h4>
                   <p className="text-xs text-gray-300 truncate">
-                    Hello devid, how are you today?
+                    {item.lastMsg ? item.lastMsg.msg : "No messages yet"}
                   </p>
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <p className="text-xs text-white">Dec, 8</p>
-                <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium block w-fit">
-                  5
-                </span>
+                {item.lastMsg && (
+                  <p className="text-xs text-white">
+                    {moment(item.lastMsg.date, "YYYY-MM-DD-H-m").fromNow()}
+                  </p>
+                )}
+                {item.unreadCount > 0 && (
+                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium block w-fit mt-1">
+                    {item.unreadCount}
+                  </span>
+                )}
               </div>
             </div>
           ))
