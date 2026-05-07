@@ -17,37 +17,39 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full px-4 pb-4 md:px-0 md:pb-0">
       <nav
-        className="bg-gradient-to-r from-[#1D3557] to-[#457B9D]
-                   fixed bottom-0 left-0 right-0 z-50
-                   md:static md:py-5
-                   shadow-[0_-2px_6px_rgba(0,0,0,0.25)] md:shadow-none
-                   rounded-t-2xl md:rounded-none"
+        className="bg-[#161B22]/90 backdrop-blur-xl border border-white/10
+                   rounded-2xl shadow-2xl z-50
+                   md:static md:py-0 md:border-none md:bg-transparent md:shadow-none"
       >
         <ul
-          className="flex justify-between md:justify-center flex-wrap 
-                     gap-2 md:gap-8 px-3 md:px-8 text-white"
+          className="flex justify-between md:justify-center items-center
+                     px-4 py-3 md:py-0 md:px-8 text-white gap-2"
         >
-          {navItems.map((item) => (
-            <li
-              key={item.to}
-              className="flex flex-col items-center flex-1 
-                         text-[10px] sm:text-xs md:text-base font-medium py-2"
-            >
-              <Link
-                to={item.to}
-                className={`flex flex-col items-center hover:text-gray-200 transition-colors ${
-                  pathname === item.to ? "text-yellow-300" : ""
-                }`}
+          {navItems.map((item) => {
+            const isActive = pathname === item.to;
+            return (
+              <li
+                key={item.to}
+                className="flex flex-col items-center flex-1"
               >
-                <span className="text-lg sm:text-xl md:text-2xl mb-0.5">
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
-            </li>
-          ))}
+                <Link
+                  to={item.to}
+                  className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 w-full ${
+                    isActive ? "text-indigo-400 bg-white/5" : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                  }`}
+                >
+                  <span className={`text-xl sm:text-2xl mb-1 transition-transform duration-300 ${isActive ? "scale-110" : ""}`}>
+                    {item.icon}
+                  </span>
+                  <span className={`text-[10px] sm:text-xs font-medium ${isActive ? "opacity-100" : "opacity-80"}`}>
+                    {item.label}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </div>

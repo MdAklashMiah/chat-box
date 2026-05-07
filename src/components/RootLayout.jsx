@@ -7,15 +7,17 @@ import { useSelector } from "react-redux";
 const RootLayout = () => {
   const user = useSelector((state) => state.chatUser.value);
   return (
-    <main className="flex relative bg-[#457B9D] min-h-dvh">
+    <main className="flex relative bg-[#0B0F19] min-h-dvh overflow-hidden selection:bg-indigo-500/30">
       <div className="hidden lg:block">
         <Sidebar />
       </div>
-      <Outlet />
-      {!user &&(
-      <div className="w-full block lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2">
-        <Navbar />
+      <div className="flex-1 h-dvh overflow-hidden relative">
+        <Outlet />
       </div>
+      {!user &&(
+        <div className="w-full block lg:hidden fixed bottom-0 left-0 z-50">
+          <Navbar />
+        </div>
       )}
     </main>
   );

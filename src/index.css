@@ -1,10 +1,39 @@
 @import "tailwindcss";
 
-.container{
-    max-width: 1120px;
-    margin: 0 auto;
-}
-.nav-list{
-    @apply lg:text-xl lg:font-bold text-[#F1FAEE] text-nowrap
+@layer base {
+  body {
+    @apply bg-[#0B0F19] text-slate-200 antialiased font-sans;
+  }
 }
 
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.glass-panel {
+  @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.05] shadow-2xl;
+}
+
+.nav-list {
+  @apply lg:text-xl lg:font-bold text-slate-200 text-nowrap;
+}
